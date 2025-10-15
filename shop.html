@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision — Boutique</title>
+    <script>
+        (function () {
+            const storageKey = 'vision-theme';
+            let theme = document.documentElement.getAttribute('data-theme') || 'dark';
+            try {
+                const stored = localStorage.getItem(storageKey);
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    theme = 'light';
+                }
+            } catch (error) {
+                theme = 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="shop">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html" aria-label="Vision — Accueil">
+                <img src="assets/images/logo.svg" alt="Vision" class="brand-logo" />
+            </a>
+            <nav class="main-nav" aria-label="Navigation principale">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="primary-menu" class="nav-list">
+                    <li><a data-i18n="nav_home" href="index.html">Accueil</a></li>
+                    <li><a data-i18n="nav_shop" href="shop.html" class="active">Boutique</a></li>
+                    <li><a data-i18n="nav_about" href="about.html">À propos</a></li>
+                    <li><a data-i18n="nav_contact" href="contact.html">Contact</a></li>
+                    <li><a data-i18n="nav_account" href="account.html">Mon compte</a></li>
+                    <li><a data-i18n="nav_cart" href="cart.html" class="cart-link">Panier</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" type="button" aria-label="Mode clair">
+                    <span class="theme-icon" aria-hidden="true"></span>
+                    <span class="theme-label">Mode clair</span>
+                </button>
+                <button class="lang-toggle" data-lang="fr" aria-label="Changer la langue">FR</button>
+                <a class="btn" href="cart.html" data-i18n="shop_cta_cart">Voir le panier</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow" data-i18n="shop_tag">Boutique</p>
+                <h1 data-i18n="shop_title">Composez votre uniforme urbain</h1>
+                <p data-i18n="shop_copy">Filtrez par catégorie, taille, couleur ou disponibilité pour trouver la pièce Vision qui vous correspond.</p>
+            </div>
+        </section>
+
+        <section class="filters" aria-label="Filtres produits">
+            <div class="container filters-inner">
+                <form class="filters-form" id="filters-form">
+                    <div class="filter-group">
+                        <label for="filter-category" data-i18n="filter_category">Catégorie</label>
+                        <select id="filter-category" name="category">
+                            <option value="all" data-i18n="filter_all">Toutes</option>
+                            <option value="metropolis" data-i18n="filter_metropolis">Métropolis</option>
+                            <option value="essentials" data-i18n="filter_essentials">Essentials</option>
+                            <option value="fluid" data-i18n="filter_fluid">Fluid Dynamics</option>
+                            <option value="limited" data-i18n="filter_limited">Éditions limitées</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-size" data-i18n="filter_size">Taille</label>
+                        <select id="filter-size" name="size">
+                            <option value="all" data-i18n="filter_all_sizes">Toutes</option>
+                            <option value="xs">XS</option>
+                            <option value="s">S</option>
+                            <option value="m">M</option>
+                            <option value="l">L</option>
+                            <option value="xl">XL</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-color" data-i18n="filter_color">Couleur</label>
+                        <select id="filter-color" name="color">
+                            <option value="all" data-i18n="filter_all_colors">Toutes</option>
+                            <option value="black" data-i18n="filter_black">Noir</option>
+                            <option value="white" data-i18n="filter_white">Blanc</option>
+                            <option value="grey" data-i18n="filter_grey">Gris</option>
+                            <option value="accent" data-i18n="filter_accent">Accent chromé</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-availability" data-i18n="filter_availability">Disponibilité</label>
+                        <select id="filter-availability" name="availability">
+                            <option value="all" data-i18n="filter_all">Toutes</option>
+                            <option value="in-stock" data-i18n="filter_instock">En stock</option>
+                            <option value="preorder" data-i18n="filter_preorder">Précommande</option>
+                            <option value="restock" data-i18n="filter_restock">Restock</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button type="submit" class="btn" data-i18n="filter_apply">Appliquer</button>
+                        <button type="reset" class="btn ghost" data-i18n="filter_reset">Réinitialiser</button>
+                    </div>
+                </form>
+                <div class="promo-card">
+                    <h2 data-i18n="promo_title">Utilisez le code VISION15</h2>
+                    <p data-i18n="promo_copy">15% de réduction sur votre première commande. Offre limitée aux 500 premiers clients.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-grid" aria-live="polite">
+            <div class="container" id="product-list">
+                <!-- Products will be injected via JS -->
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <div class="container">
+                <h2 data-i18n="cta_banner_title">Besoin d'un conseil style ?</h2>
+                <p data-i18n="cta_banner_copy">Réservez une session en visio avec nos stylistes Vision pour créer votre tenue idéale.</p>
+                <a class="btn" href="contact.html" data-i18n="cta_banner_link">Planifier une session</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <img src="assets/images/logo.svg" alt="Vision" class="brand-logo" />
+                <p data-i18n="footer_copy">Vision réinvente les essentiels urbains avec un regard responsable et avant-gardiste.</p>
+                <div class="social-links" aria-label="Réseaux sociaux">
+                    <a href="https://instagram.com" aria-label="Instagram">Instagram</a>
+                    <a href="https://tiktok.com" aria-label="TikTok">TikTok</a>
+                    <a href="https://youtube.com" aria-label="YouTube">YouTube</a>
+                </div>
+            </div>
+            <div>
+                <h3 data-i18n="footer_shop">Boutique</h3>
+                <ul>
+                    <li><a href="#metropolis" data-i18n="footer_metro">Ligne Métropolis</a></li>
+                    <li><a href="#essentials" data-i18n="footer_essentials">Essentials 24/7</a></li>
+                    <li><a href="#fluid" data-i18n="footer_fluid">Fluid Dynamics</a></li>
+                    <li><a href="#limited" data-i18n="footer_limited">Drops exclusifs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 data-i18n="footer_support">Support</h3>
+                <ul>
+                    <li><a href="contact.html" data-i18n="footer_contact">Nous contacter</a></li>
+                    <li><a href="policies.html#returns" data-i18n="footer_returns">Politique de retour</a></li>
+                    <li><a href="policies.html#delivery" data-i18n="footer_delivery">Livraison & suivi</a></li>
+                    <li><a href="policies.html#privacy" data-i18n="footer_privacy">Confidentialité & cookies</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 data-i18n="footer_legal">Légal</h3>
+                <ul>
+                    <li><a href="legal.html#terms" data-i18n="footer_terms">Mentions légales</a></li>
+                    <li><a href="legal.html#cgv" data-i18n="footer_cgv">Conditions générales de vente</a></li>
+                    <li><a href="policies.html#cookies" data-i18n="footer_cookies">Préférences cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p data-i18n="footer_rights">© Vision. Tous droits réservés.</p>
+            <p class="goat-cheese" data-i18n="footer_budget">Budget : des toasts de chèvre ?</p>
+        </div>
+    </footer>
+
+    <div class="cookies-banner" role="dialog" aria-live="assertive" aria-label="Gestion des cookies">
+        <div class="cookies-content">
+            <p data-i18n="cookies_message">Vision utilise des cookies pour personnaliser votre expérience. Choisissez vos préférences.</p>
+            <div class="cookies-actions">
+                <button class="btn ghost" data-action="cookies-settings" data-i18n="cookies_settings">Paramétrer</button>
+                <button class="btn" data-action="cookies-accept" data-i18n="cookies_accept">Tout accepter</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
