@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision — À propos</title>
+    <script>
+        (function () {
+            const storageKey = 'vision-theme';
+            let theme = document.documentElement.getAttribute('data-theme') || 'dark';
+            try {
+                const stored = localStorage.getItem(storageKey);
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    theme = 'light';
+                }
+            } catch (error) {
+                theme = 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="about">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html" aria-label="Vision — Accueil">
+                <img
+                    src="assets/images/logo-light.svg"
+                    alt="Vision"
+                    class="brand-logo"
+                    data-logo-dark="assets/images/logo-light.svg"
+                    data-logo-light="assets/images/logo-dark.svg"
+                />
+            </a>
+            <nav class="main-nav" aria-label="Navigation principale">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="primary-menu" class="nav-list">
+                    <li><a data-i18n="nav_home" href="index.html">Accueil</a></li>
+                    <li><a data-i18n="nav_shop" href="shop.html">Boutique</a></li>
+                    <li><a data-i18n="nav_about" href="about.html" class="active">À propos</a></li>
+                    <li><a data-i18n="nav_contact" href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" type="button" aria-pressed="false">
+                    <span class="sr-only theme-label">Mode clair</span>
+                    <span class="toggle-track" aria-hidden="true">
+                        <span class="toggle-icon toggle-icon--moon">☾</span>
+                        <span class="toggle-icon toggle-icon--sun">☀</span>
+                        <span class="toggle-thumb"></span>
+                    </span>
+                </button>
+                <button class="lang-toggle" type="button" data-lang="fr" aria-label="Passer en anglais">
+                    <span class="flag" aria-hidden="true">🇬🇧</span>
+                    <span class="sr-only lang-toggle-label">Passer en anglais</span>
+                </button>
+                <a class="btn" href="cart.html" data-i18n="cta_cart">Panier</a>
+                <a class="account-link" href="account.html">
+                    <span class="sr-only" data-i18n="account_link_label">Mon compte</span>
+                    <span class="account-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow" data-i18n="about_tag">Notre univers</p>
+                <h1 data-i18n="about_title">Vision : l'esthétique streetwear pensée pour durer</h1>
+                <p data-i18n="about_intro">Née dans les rues de Paris et façonnée par une communauté internationale, Vision repense les essentiels urbains avec exigence et conscience.</p>
+            </div>
+        </section>
+
+        <section class="timeline">
+            <div class="container">
+                <article class="timeline-item">
+                    <h2 data-i18n="timeline_2016_title">2016 — Origines</h2>
+                    <p data-i18n="timeline_2016_copy">Lancement de Vision avec une première série de hoodies produits en édition limitée et sérigraphiés à la main.</p>
+                </article>
+                <article class="timeline-item">
+                    <h2 data-i18n="timeline_2018_title">2018 — Communauté</h2>
+                    <p data-i18n="timeline_2018_copy">Ouverture du studio Vision à Paris, ateliers co-créatifs avec les clients et premières collaborations avec des artistes visuels.</p>
+                </article>
+                <article class="timeline-item">
+                    <h2 data-i18n="timeline_2021_title">2021 — Expansion</h2>
+                    <p data-i18n="timeline_2021_copy">Distribution internationale, lancement de la plateforme e-commerce et introduction des gammes techniques.</p>
+                </article>
+                <article class="timeline-item">
+                    <h2 data-i18n="timeline_2024_title">2024 — Innovation</h2>
+                    <p data-i18n="timeline_2024_copy">Intégration de la modélisation 3D, logistique bas carbone et programme de recyclage Vision Loop.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="split-section">
+            <div class="container split">
+                <div>
+                    <span class="eyebrow" data-i18n="mission_tag">Mission</span>
+                    <h2 data-i18n="mission_title">Créer des pièces qui racontent les villes et respectent la planète</h2>
+                    <p data-i18n="mission_copy">Chaque collection est conçue à partir de matériaux premium et responsables. Nous travaillons avec des ateliers certifiés, privilégions des séries limitées pour éviter la surproduction et offrons une traçabilité complète.</p>
+                </div>
+                <div>
+                    <span class="eyebrow" data-i18n="vision_tag">Vision</span>
+                    <h2 data-i18n="vision_title">Une marque pensée pour la communauté</h2>
+                    <p data-i18n="vision_copy">Vision défend la diversité, l'inclusivité et l'expression personnelle. Nos campagnes donnent la parole aux clients, artistes, athlètes et créatifs qui nous inspirent.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-grid">
+            <div class="container section-header">
+                <h2 data-i18n="pillars_title">Nos piliers</h2>
+            </div>
+            <div class="container grid-3">
+                <article>
+                    <h3 data-i18n="pillar_design_title">Design fonctionnel</h3>
+                    <p data-i18n="pillar_design_copy">Coupes étudiées, poches intelligentes, tissus respirants et résistance à l'eau pour accompagner les rythmes urbains.</p>
+                </article>
+                <article>
+                    <h3 data-i18n="pillar_culture_title">Culture street</h3>
+                    <p data-i18n="pillar_culture_copy">Influencée par le skate, la musique électronique et l'art contemporain, Vision capte l'énergie des grandes villes.</p>
+                </article>
+                <article>
+                    <h3 data-i18n="pillar_responsibility_title">Responsabilité</h3>
+                    <p data-i18n="pillar_responsibility_copy">Traçabilité complète, partenaires engagés, packaging recyclé et donation d'invendus à des associations.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="team">
+            <div class="container section-header">
+                <h2 data-i18n="team_title">L'équipe Vision</h2>
+                <p data-i18n="team_copy">Une équipe multidisciplinaire mêlant designers, stylistes, développeurs, logisticiens et storytellers.</p>
+            </div>
+            <div class="container team-grid">
+                <article class="team-card">
+                    <h3>Aliyah Chen</h3>
+                    <p data-i18n="team_aliyah">Directrice créative — imagine les silhouettes et collabore avec des artistes émergents.</p>
+                </article>
+                <article class="team-card">
+                    <h3>Liam Moreau</h3>
+                    <p data-i18n="team_liam">Head of Digital — pilote l'expérience e-commerce, la 3D et les innovations retail.</p>
+                </article>
+                <article class="team-card">
+                    <h3>Jade Okafor</h3>
+                    <p data-i18n="team_jade">Responsable production — garantit la qualité, la traçabilité et la logistique bas carbone.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <img
+                    src="assets/images/logo-light.svg"
+                    alt="Vision"
+                    class="brand-logo"
+                    data-logo-dark="assets/images/logo-light.svg"
+                    data-logo-light="assets/images/logo-dark.svg"
+                />
+                <p data-i18n="footer_copy">Vision réinvente les essentiels urbains avec un regard responsable et avant-gardiste.</p>
+                <div class="social-links" aria-label="Réseaux sociaux">
+                    <a href="https://instagram.com" aria-label="Instagram">Instagram</a>
+                    <a href="https://tiktok.com" aria-label="TikTok">TikTok</a>
+                    <a href="https://youtube.com" aria-label="YouTube">YouTube</a>
+                </div>
+            </div>
+            <div>
+                <h3 data-i18n="footer_shop">Boutique</h3>
+                <ul>
+                    <li><a href="shop.html#metropolis" data-i18n="footer_metro">Ligne Métropolis</a></li>
+                    <li><a href="shop.html#essentials" data-i18n="footer_essentials">Essentials 24/7</a></li>
+                    <li><a href="shop.html#fluid" data-i18n="footer_fluid">Fluid Dynamics</a></li>
+                    <li><a href="shop.html#limited" data-i18n="footer_limited">Drops exclusifs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 data-i18n="footer_support">Support</h3>
+                <ul>
+                    <li><a href="contact.html" data-i18n="footer_contact">Nous contacter</a></li>
+                    <li><a href="policies.html#returns" data-i18n="footer_returns">Politique de retour</a></li>
+                    <li><a href="policies.html#delivery" data-i18n="footer_delivery">Livraison & suivi</a></li>
+                    <li><a href="policies.html#privacy" data-i18n="footer_privacy">Confidentialité & cookies</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 data-i18n="footer_legal">Légal</h3>
+                <ul>
+                    <li><a href="legal.html#terms" data-i18n="footer_terms">Mentions légales</a></li>
+                    <li><a href="legal.html#cgv" data-i18n="footer_cgv">Conditions générales de vente</a></li>
+                    <li><a href="policies.html#cookies" data-i18n="footer_cookies">Préférences cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p data-i18n="footer_rights">© Vision. Tous droits réservés.</p>
+            <p class="goat-cheese" data-i18n="footer_budget">Budget : des toasts de chèvre ?</p>
+        </div>
+    </footer>
+
+    <div class="cookies-banner" role="dialog" aria-live="assertive" aria-label="Gestion des cookies">
+        <div class="cookies-content">
+            <p data-i18n="cookies_message">Vision utilise des cookies pour personnaliser votre expérience. Choisissez vos préférences.</p>
+            <div class="cookies-actions">
+                <button class="btn ghost" data-action="cookies-settings" data-i18n="cookies_settings">Paramétrer</button>
+                <button class="btn" data-action="cookies-accept" data-i18n="cookies_accept">Tout accepter</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

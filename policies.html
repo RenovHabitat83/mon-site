@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision — Politiques</title>
+    <script>
+        (function () {
+            const storageKey = 'vision-theme';
+            let theme = document.documentElement.getAttribute('data-theme') || 'dark';
+            try {
+                const stored = localStorage.getItem(storageKey);
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    theme = 'light';
+                }
+            } catch (error) {
+                theme = 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="policies">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html" aria-label="Vision — Accueil">
+                <img
+                    src="assets/images/logo-light.svg"
+                    alt="Vision"
+                    class="brand-logo"
+                    data-logo-dark="assets/images/logo-light.svg"
+                    data-logo-light="assets/images/logo-dark.svg"
+                />
+            </a>
+            <nav class="main-nav" aria-label="Navigation principale">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="primary-menu" class="nav-list">
+                    <li><a data-i18n="nav_home" href="index.html">Accueil</a></li>
+                    <li><a data-i18n="nav_shop" href="shop.html">Boutique</a></li>
+                    <li><a data-i18n="nav_about" href="about.html">À propos</a></li>
+                    <li><a data-i18n="nav_contact" href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" type="button" aria-pressed="false">
+                    <span class="sr-only theme-label">Mode clair</span>
+                    <span class="toggle-track" aria-hidden="true">
+                        <span class="toggle-icon toggle-icon--moon">☾</span>
+                        <span class="toggle-icon toggle-icon--sun">☀</span>
+                        <span class="toggle-thumb"></span>
+                    </span>
+                </button>
+                <button class="lang-toggle" type="button" data-lang="fr" aria-label="Passer en anglais">
+                    <span class="flag" aria-hidden="true">🇬🇧</span>
+                    <span class="sr-only lang-toggle-label">Passer en anglais</span>
+                </button>
+                <a class="btn" href="cart.html" data-i18n="cta_cart">Panier</a>
+                <a class="account-link" href="account.html">
+                    <span class="sr-only" data-i18n="account_link_label">Mon compte</span>
+                    <span class="account-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow" data-i18n="policies_tag">Politiques</p>
+                <h1 data-i18n="policies_title">Confidentialité, retours, livraison & cookies</h1>
+                <p data-i18n="policies_intro">Retrouvez l'ensemble des informations clés concernant la gestion de vos données, les retours, la livraison et vos préférences de cookies.</p>
+            </div>
+        </section>
+
+        <section class="legal-section" id="privacy">
+            <div class="container">
+                <h2 data-i18n="privacy_title">Politique de confidentialité</h2>
+                <p data-i18n="privacy_intro">Vision s'engage à protéger vos données personnelles. Le document complet sera publié dès validation juridique.</p>
+                <ul class="legal-list">
+                    <li data-i18n="privacy_data">Collecte limitée aux données nécessaires : identifiants, préférences, historique de commandes.</li>
+                    <li data-i18n="privacy_use">Utilisation : gestion des commandes, personnalisation, newsletter Vision Loop.</li>
+                    <li data-i18n="privacy_rights">Vos droits : accès, rectification, portabilité, suppression via privacy@visionwear.com.</li>
+                    <li data-i18n="privacy_security">Sécurité : chiffrement, audits réguliers, hébergement conforme RGPD.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="legal-section" id="returns">
+            <div class="container">
+                <h2 data-i18n="returns_title">Politique de retour</h2>
+                <p data-i18n="returns_intro">Les modalités officielles seront intégrées lors de la mise en ligne. Aperçu des engagements Vision :</p>
+                <ul class="legal-list">
+                    <li data-i18n="returns_period">Retour sous 30 jours, pièces non portées et étiquettes intactes.</li>
+                    <li data-i18n="returns_process">Portail Vision Loop pour générer une étiquette prépayée et suivre votre dossier.</li>
+                    <li data-i18n="returns_refund">Remboursement sous 7 jours ouvrés après réception et contrôle qualité.</li>
+                    <li data-i18n="returns_exchange">Échanges possibles selon disponibilité en stock.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="legal-section" id="delivery">
+            <div class="container">
+                <h2 data-i18n="delivery_title">Politique de livraison</h2>
+                <p data-i18n="delivery_intro">Vision expédie à l'international en collaborant avec des partenaires logistiques responsables.</p>
+                <ul class="legal-list">
+                    <li data-i18n="delivery_modes">Modes : express 24/48h, standard 3-5 jours, relais 4-6 jours.</li>
+                    <li data-i18n="delivery_tracking">Suivi temps réel via l'espace client et notifications SMS.</li>
+                    <li data-i18n="delivery_fees">Frais calculés selon le pays, offerts dès 200 € d'achat.</li>
+                    <li data-i18n="delivery_green">Option green : compensation carbone, emballages recyclés.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="legal-section" id="cookies">
+            <div class="container">
+                <h2 data-i18n="cookies_title">Politique cookies & préférences</h2>
+                <p data-i18n="cookies_intro">Vision respecte le RGPD. Cette section sera connectée à une CMP (Consent Management Platform) lors du développement final.</p>
+                <ul class="legal-list">
+                    <li data-i18n="cookies_necessary">Cookies essentiels : indispensables au fonctionnement (authentification, panier).</li>
+                    <li data-i18n="cookies_analytics">Cookies analytiques : mesure d'audience anonymisée.</li>
+                    <li data-i18n="cookies_marketing">Cookies marketing : personnalisation des offres et campagnes.</li>
+                    <li data-i18n="cookies_preferences">Vous pouvez ajuster vos préférences à tout moment depuis le bandeau cookies ou votre compte.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <img
+                    src="assets/images/logo-light.svg"
+                    alt="Vision"
+                    class="brand-logo"
+                    data-logo-dark="assets/images/logo-light.svg"
+                    data-logo-light="assets/images/logo-dark.svg"
+                />
+                <p data-i18n="footer_copy">Vision réinvente les essentiels urbains avec un regard responsable et avant-gardiste.</p>
+                <div class="social-links" aria-label="Réseaux sociaux">
+                    <a href="https://instagram.com" aria-label="Instagram">Instagram</a>
+                    <a href="https://tiktok.com" aria-label="TikTok">TikTok</a>
+                    <a href="https://youtube.com" aria-label="YouTube">YouTube</a>
+                </div>
+            </div>
+            <div>
+                <h3 data-i18n="footer_shop">Boutique</h3>
+                <ul>
+                    <li><a href="shop.html#metropolis" data-i18n="footer_metro">Ligne Métropolis</a></li>
+                    <li><a href="shop.html#essentials" data-i18n="footer_essentials">Essentials 24/7</a></li>
+                    <li><a href="shop.html#fluid" data-i18n="footer_fluid">Fluid Dynamics</a></li>
+                    <li><a href="shop.html#limited" data-i18n="footer_limited">Drops exclusifs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 data-i18n="footer_support">Support</h3>
+                <ul>
+                    <li><a href="contact.html" data-i18n="footer_contact">Nous contacter</a></li>
+                    <li><a href="policies.html#returns" data-i18n="footer_returns">Politique de retour</a></li>
+                    <li><a href="policies.html#delivery" data-i18n="footer_delivery">Livraison & suivi</a></li>
+                    <li><a href="policies.html#privacy" data-i18n="footer_privacy">Confidentialité & cookies</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 data-i18n="footer_legal">Légal</h3>
+                <ul>
+                    <li><a href="legal.html#terms" data-i18n="footer_terms">Mentions légales</a></li>
+                    <li><a href="legal.html#cgv" data-i18n="footer_cgv">Conditions générales de vente</a></li>
+                    <li><a href="policies.html#cookies" data-i18n="footer_cookies">Préférences cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p data-i18n="footer_rights">© Vision. Tous droits réservés.</p>
+            <p class="goat-cheese" data-i18n="footer_budget">Budget : des toasts de chèvre ?</p>
+        </div>
+    </footer>
+
+    <div class="cookies-banner" role="dialog" aria-live="assertive" aria-label="Gestion des cookies">
+        <div class="cookies-content">
+            <p data-i18n="cookies_message">Vision utilise des cookies pour personnaliser votre expérience. Choisissez vos préférences.</p>
+            <div class="cookies-actions">
+                <button class="btn ghost" data-action="cookies-settings" data-i18n="cookies_settings">Paramétrer</button>
+                <button class="btn" data-action="cookies-accept" data-i18n="cookies_accept">Tout accepter</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
