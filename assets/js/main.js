@@ -6,6 +6,8 @@ const translations = {
         nav_contact: "Contact",
         nav_account: "Mon compte",
         nav_cart: "Panier",
+        theme_toggle_light: "Mode clair",
+        theme_toggle_dark: "Mode sombre",
         cta_shop: "Boutique",
         hero_tag: "Nouvelle vague streetwear",
         hero_title: "Vision — L'élégance urbaine taillée pour le quotidien",
@@ -16,6 +18,21 @@ const translations = {
         hero_card_copy: "Parka technique, hoodie double épaisseur, pantalon cargo texturé.",
         hero_card_link: "Découvrir la capsule",
         badge_new: "Nouveautés",
+        highlight_tag: "Sélection lumineuse",
+        highlight_title: "Une zone claire pour repérer vos prochains essentiels",
+        highlight_copy: "Visualisez dès maintenant trois emplacements produits dédiés à vos futurs best-sellers Vision.",
+        highlight_visual: "Visuel 4:5",
+        highlight_product1_label: "Produit à venir",
+        highlight_product1_name: "Emplacement produit n°1",
+        highlight_product1_copy: "Réservez cet espace pour votre pièce phare : photo, nom, prix et appel à l'action s'y intégreront parfaitement.",
+        highlight_product2_label: "Produit à venir",
+        highlight_product2_name: "Emplacement produit n°2",
+        highlight_product2_copy: "Mettez en avant une nouveauté ou une édition limitée avec visuel 3:4 et fiche descriptive concise.",
+        highlight_product3_label: "Produit à venir",
+        highlight_product3_name: "Emplacement produit n°3",
+        highlight_product3_copy: "Préparez ici votre drop exclusif : matériaux, storytelling et boutons d'ajout au panier seront mis en valeur.",
+        highlight_price_placeholder: "Prix à définir",
+        highlight_cta: "Bientôt disponible",
         collections_tag: "Collections",
         collections_title: "Des pièces essentielles pour un dressing visionnaire",
         collections_copy: "Composez votre uniforme urbain avec des basiques revisités, des coupes oversize maîtrisées et des détails techniques pensés pour durer.",
@@ -275,6 +292,8 @@ translations.en = Object.fromEntries(
             Contact: "Contact",
             "Mon compte": "Account",
             Panier: "Cart",
+            "Mode clair": "Light mode",
+            "Mode sombre": "Dark mode",
             "Politiques": "Policies",
             "Nouvelle vague streetwear": "New streetwear wave",
             "Vision — L'élégance urbaine taillée pour le quotidien": "Vision — Urban elegance tailored for everyday life",
@@ -285,6 +304,19 @@ translations.en = Object.fromEntries(
             "Parka technique, hoodie double épaisseur, pantalon cargo texturé.": "Technical parka, double-layer hoodie, textured cargo pant.",
             "Découvrir la capsule": "Discover the capsule",
             "Nouveautés": "New",
+            "Sélection lumineuse": "Luminous selection",
+            "Une zone claire pour repérer vos prochains essentiels": "A bright zone to spot your next essentials",
+            "Visualisez dès maintenant trois emplacements produits dédiés à vos futurs best-sellers Vision.": "Preview three product placeholders ready for your future Vision best-sellers.",
+            "Visuel 4:5": "4:5 visual",
+            "Produit à venir": "Coming soon",
+            "Emplacement produit n°1": "Product placeholder #1",
+            "Réservez cet espace pour votre pièce phare : photo, nom, prix et appel à l'action s'y intégreront parfaitement.": "Reserve this space for your hero piece: imagery, name, price and CTA will slot in seamlessly.",
+            "Emplacement produit n°2": "Product placeholder #2",
+            "Mettez en avant une nouveauté ou une édition limitée avec visuel 3:4 et fiche descriptive concise.": "Spotlight a new arrival or limited drop with a 3:4 visual and concise write-up.",
+            "Emplacement produit n°3": "Product placeholder #3",
+            "Préparez ici votre drop exclusif : matériaux, storytelling et boutons d'ajout au panier seront mis en valeur.": "Stage your exclusive drop here: materials, storytelling and add-to-cart actions shine.",
+            "Prix à définir": "Price TBD",
+            "Bientôt disponible": "Coming soon",
             "Collections": "Collections",
             "Des pièces essentielles pour un dressing visionnaire": "Essential pieces for a visionary wardrobe",
             "Composez votre uniforme urbain avec des basiques revisités, des coupes oversize maîtrisées et des détails techniques pensés pour durer.": "Build your urban uniform with reworked staples, controlled oversized fits and durable technical details.",
@@ -522,6 +554,69 @@ translations.en = Object.fromEntries(
     })
 );
 
+const THEME_STORAGE_KEY = "vision-theme";
+
+const getCurrentLanguage = () => (document.documentElement.lang === "fr" ? "fr" : "en");
+
+const updateThemeToggleLabel = (lang = getCurrentLanguage()) => {
+    const themeToggle = document.querySelector(".theme-toggle");
+    if (!themeToggle) return;
+
+    const currentTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+    const labelKey = currentTheme === "light" ? "theme_toggle_dark" : "theme_toggle_light";
+    const label = (translations[lang] && translations[lang][labelKey]) || translations.fr[labelKey];
+    const labelEl = themeToggle.querySelector(".theme-label");
+
+    if (labelEl && label) {
+        labelEl.textContent = label;
+    }
+
+    if (label) {
+        themeToggle.setAttribute("aria-label", label);
+    }
+
+    themeToggle.dataset.state = currentTheme;
+};
+
+const applyTheme = (theme) => {
+    const normalized = theme === "light" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", normalized);
+    try {
+        localStorage.setItem(THEME_STORAGE_KEY, normalized);
+    } catch (error) {
+        // ignore storage errors (private mode)
+    }
+    updateThemeToggleLabel();
+};
+
+const initThemeToggle = () => {
+    const themeToggle = document.querySelector(".theme-toggle");
+    if (!themeToggle) return;
+
+    let initialTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+
+    try {
+        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        if (storedTheme) {
+            initialTheme = storedTheme;
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+            initialTheme = "light";
+        }
+    } catch (error) {
+        initialTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+    }
+
+    applyTheme(initialTheme);
+
+    themeToggle.addEventListener("click", () => {
+        const currentTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+        const nextTheme = currentTheme === "light" ? "dark" : "light";
+        applyTheme(nextTheme);
+    });
+
+    updateThemeToggleLabel();
+};
+
 const products = [
     {
         id: "metropolis-parka",
@@ -682,6 +777,8 @@ const updateTranslations = (lang) => {
         button.setAttribute("aria-label", button.textContent);
     });
 
+    updateThemeToggleLabel(lang);
+
     renderProducts(lang);
     renderCart(lang);
 };
@@ -778,6 +875,7 @@ const initCookiesBanner = () => {
 };
 
 const init = () => {
+    initThemeToggle();
     initLangToggle();
     initNavToggle();
     initNewsletter();

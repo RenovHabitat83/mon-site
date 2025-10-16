@@ -1,9 +1,26 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vision — Mon compte</title>
+    <script>
+        (function () {
+            const storageKey = 'vision-theme';
+            let theme = document.documentElement.getAttribute('data-theme') || 'dark';
+            try {
+                const stored = localStorage.getItem(storageKey);
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    theme = 'light';
+                }
+            } catch (error) {
+                theme = 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +48,10 @@
                 </ul>
             </nav>
             <div class="header-actions">
+                <button class="theme-toggle" type="button" aria-label="Mode clair">
+                    <span class="theme-icon" aria-hidden="true"></span>
+                    <span class="theme-label">Mode clair</span>
+                </button>
                 <button class="lang-toggle" data-lang="fr" aria-label="Changer la langue">FR</button>
                 <a class="btn" href="shop.html" data-i18n="cta_shop">Boutique</a>
             </div>
