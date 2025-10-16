@@ -30,7 +30,13 @@
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="index.html" aria-label="Vision — Accueil">
-                <img src="assets/images/logo.svg" alt="Vision" class="brand-logo" />
+                <img
+                    src="assets/images/logo-light.svg"
+                    alt="Vision"
+                    class="brand-logo"
+                    data-logo-dark="assets/images/logo-light.svg"
+                    data-logo-light="assets/images/logo-dark.svg"
+                />
             </a>
             <nav class="main-nav" aria-label="Navigation principale">
                 <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
@@ -43,17 +49,26 @@
                     <li><a data-i18n="nav_shop" href="shop.html" class="active">Boutique</a></li>
                     <li><a data-i18n="nav_about" href="about.html">À propos</a></li>
                     <li><a data-i18n="nav_contact" href="contact.html">Contact</a></li>
-                    <li><a data-i18n="nav_account" href="account.html">Mon compte</a></li>
-                    <li><a data-i18n="nav_cart" href="cart.html" class="cart-link">Panier</a></li>
                 </ul>
             </nav>
             <div class="header-actions">
-                <button class="theme-toggle" type="button" aria-label="Mode clair">
-                    <span class="theme-icon" aria-hidden="true"></span>
-                    <span class="theme-label">Mode clair</span>
+                <button class="theme-toggle" type="button" aria-pressed="false">
+                    <span class="sr-only theme-label">Mode clair</span>
+                    <span class="toggle-track" aria-hidden="true">
+                        <span class="toggle-icon toggle-icon--moon">☾</span>
+                        <span class="toggle-icon toggle-icon--sun">☀</span>
+                        <span class="toggle-thumb"></span>
+                    </span>
                 </button>
-                <button class="lang-toggle" data-lang="fr" aria-label="Changer la langue">FR</button>
-                <a class="btn" href="cart.html" data-i18n="shop_cta_cart">Voir le panier</a>
+                <button class="lang-toggle" type="button" data-lang="fr" aria-label="Passer en anglais">
+                    <span class="flag" aria-hidden="true">🇬🇧</span>
+                    <span class="sr-only lang-toggle-label">Passer en anglais</span>
+                </button>
+                <a class="btn" href="cart.html" data-i18n="cta_cart">Panier</a>
+                <a class="account-link" href="account.html">
+                    <span class="sr-only" data-i18n="account_link_label">Mon compte</span>
+                    <span class="account-icon" aria-hidden="true"></span>
+                </a>
             </div>
         </div>
     </header>
@@ -140,7 +155,13 @@
     <footer class="site-footer">
         <div class="container footer-grid">
             <div>
-                <img src="assets/images/logo.svg" alt="Vision" class="brand-logo" />
+                <img
+                    src="assets/images/logo-light.svg"
+                    alt="Vision"
+                    class="brand-logo"
+                    data-logo-dark="assets/images/logo-light.svg"
+                    data-logo-light="assets/images/logo-dark.svg"
+                />
                 <p data-i18n="footer_copy">Vision réinvente les essentiels urbains avec un regard responsable et avant-gardiste.</p>
                 <div class="social-links" aria-label="Réseaux sociaux">
                     <a href="https://instagram.com" aria-label="Instagram">Instagram</a>

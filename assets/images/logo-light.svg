@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 256" role="img" aria-labelledby="title desc">
+  <title id="title">Vision marque mot-symbole blanc</title>
+  <desc id="desc">Logo Vision blanc avec lettrage audacieux et courbe dynamique</desc>
+  <g fill="#f8f9fb">
+    <path d="M56 56h46l56 144h-44l-13-36H57L44 200H0zm38.6 72.9L80.4 96l-14.2 32.9z"/>
+    <path d="M185 56h44v144h-44z"/>
+    <path d="M255 56h44v144h-44z"/>
+    <path d="M332 56c45 0 74 29.1 74 72.1 0 43.4-28.8 71.9-74.3 71.9-45.6 0-74.4-28.5-74.4-71.9C257.3 85.1 286.1 56 332 56zm0 39.4c-18.8 0-30.3 12.8-30.3 32.5 0 19.4 11.5 32.5 30.3 32.5 18.6 0 30.1-13 30.1-32.5 0-19.6-11.5-32.5-30.1-32.5z"/>
+    <path d="M425 56h39l52 80.4V56h41v144h-38l-53-81.3V200h-41z"/>
+  </g>
+  <path d="M104 228c132 28 242 23 360-36 8-4 18 7 11 14-73 74-249 74-371 46-21-4-17-30 0-24z" fill="#f8f9fb"/>
+</svg>

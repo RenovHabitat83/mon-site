@@ -4,11 +4,12 @@ const translations = {
         nav_shop: "Boutique",
         nav_about: "À propos",
         nav_contact: "Contact",
-        nav_account: "Mon compte",
-        nav_cart: "Panier",
         theme_toggle_light: "Mode clair",
         theme_toggle_dark: "Mode sombre",
-        cta_shop: "Boutique",
+        lang_toggle_to_en: "Passer en anglais",
+        lang_toggle_to_fr: "Passer en français",
+        account_link_label: "Mon compte",
+        cta_cart: "Panier",
         hero_tag: "Nouvelle vague streetwear",
         hero_title: "Vision — L'élégance urbaine taillée pour le quotidien",
         hero_copy: "Des silhouettes minimalistes, des matières responsables et une allure qui capte l'instant. Découvrez des pièces pensées pour bouger avec vous.",
@@ -111,7 +112,6 @@ const translations = {
         cookies_message: "Vision utilise des cookies pour personnaliser votre expérience. Choisissez vos préférences.",
         cookies_settings: "Paramétrer",
         cookies_accept: "Tout accepter",
-        shop_cta_cart: "Voir le panier",
         shop_tag: "Boutique",
         shop_title: "Composez votre uniforme urbain",
         shop_copy: "Filtrez par catégorie, taille, couleur ou disponibilité pour trouver la pièce Vision qui vous correspond.",
@@ -292,6 +292,8 @@ translations.en = Object.fromEntries(
             Contact: "Contact",
             "Mon compte": "Account",
             Panier: "Cart",
+            "Passer en anglais": "Switch to English",
+            "Passer en français": "Switch to French",
             "Mode clair": "Light mode",
             "Mode sombre": "Dark mode",
             "Politiques": "Policies",
@@ -394,7 +396,6 @@ translations.en = Object.fromEntries(
             "Vision utilise des cookies pour personnaliser votre expérience. Choisissez vos préférences.": "Vision uses cookies to tailor your experience. Choose your preferences.",
             "Paramétrer": "Manage",
             "Tout accepter": "Accept all",
-            "Voir le panier": "View cart",
             "Composez votre uniforme urbain": "Build your urban uniform",
             "Filtrez par catégorie, taille, couleur ou disponibilité pour trouver la pièce Vision qui vous correspond.": "Filter by category, size, color or availability to find your Vision piece.",
             "Catégorie": "Category",
@@ -558,6 +559,19 @@ const THEME_STORAGE_KEY = "vision-theme";
 
 const getCurrentLanguage = () => (document.documentElement.lang === "fr" ? "fr" : "en");
 
+const updateBrandLogo = (theme) => {
+    const logos = document.querySelectorAll(".brand-logo");
+    logos.forEach((logo) => {
+        const darkSrc = logo.getAttribute("data-logo-dark");
+        const lightSrc = logo.getAttribute("data-logo-light");
+        if (theme === "light" && lightSrc) {
+            logo.setAttribute("src", lightSrc);
+        } else if (theme === "dark" && darkSrc) {
+            logo.setAttribute("src", darkSrc);
+        }
+    });
+};
+
 const updateThemeToggleLabel = (lang = getCurrentLanguage()) => {
     const themeToggle = document.querySelector(".theme-toggle");
     if (!themeToggle) return;
@@ -576,6 +590,7 @@ const updateThemeToggleLabel = (lang = getCurrentLanguage()) => {
     }
 
     themeToggle.dataset.state = currentTheme;
+    themeToggle.setAttribute("aria-pressed", currentTheme === "light" ? "true" : "false");
 };
 
 const applyTheme = (theme) => {
@@ -586,7 +601,31 @@ const applyTheme = (theme) => {
     } catch (error) {
         // ignore storage errors (private mode)
     }
+    updateBrandLogo(normalized);
     updateThemeToggleLabel();
+};
+
+const updateLangToggleUI = (lang) => {
+    const toggle = document.querySelector(".lang-toggle");
+    if (!toggle) return;
+
+    const currentLang = lang === "fr" ? "fr" : "en";
+    const targetLang = currentLang === "fr" ? "en" : "fr";
+    const flag = toggle.querySelector(".flag");
+    const labelEl = toggle.querySelector(".lang-toggle-label");
+    const labelKey = targetLang === "en" ? "lang_toggle_to_en" : "lang_toggle_to_fr";
+    const label = (translations[currentLang] && translations[currentLang][labelKey]) || translations.fr[labelKey];
+
+    if (flag) {
+        flag.textContent = targetLang === "en" ? "🇬🇧" : "🇫🇷";
+    }
+
+    if (labelEl) {
+        labelEl.textContent = label;
+    }
+
+    toggle.setAttribute("aria-label", label);
+    toggle.dataset.lang = currentLang;
 };
 
 const initThemeToggle = () => {
@@ -777,6 +816,7 @@ const updateTranslations = (lang) => {
         button.setAttribute("aria-label", button.textContent);
     });
 
+    updateLangToggleUI(lang);
     updateThemeToggleLabel(lang);
 
     renderProducts(lang);
@@ -787,12 +827,10 @@ const initLangToggle = () => {
     const toggle = document.querySelector(".lang-toggle");
     if (!toggle) return;
 
-    let currentLang = toggle.dataset.lang || "fr";
+    let currentLang = toggle.dataset.lang === "en" ? "en" : "fr";
 
     toggle.addEventListener("click", () => {
         currentLang = currentLang === "fr" ? "en" : "fr";
-        toggle.dataset.lang = currentLang;
-        toggle.textContent = currentLang.toUpperCase();
         updateTranslations(currentLang);
     });
 
