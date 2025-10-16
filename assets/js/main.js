@@ -556,6 +556,10 @@ translations.en = Object.fromEntries(
 );
 
 const THEME_STORAGE_KEY = "vision-theme";
+const THEME_COOKIE_KEY = "vision_theme";
+const LANG_COOKIE_KEY = "vision_lang";
+const PRODUCTS_ENDPOINT = "api/products.php";
+const CART_ENDPOINT = "api/cart.php";
 
 const getCurrentLanguage = () => (document.documentElement.lang === "fr" ? "fr" : "en");
 
@@ -601,6 +605,7 @@ const applyTheme = (theme) => {
     } catch (error) {
         // ignore storage errors (private mode)
     }
+    document.cookie = `${THEME_COOKIE_KEY}=${normalized};path=/;max-age=31536000;samesite=Lax`;
     updateBrandLogo(normalized);
     updateThemeToggleLabel();
 };
@@ -633,16 +638,20 @@ const initThemeToggle = () => {
     if (!themeToggle) return;
 
     let initialTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+    const cookieMatch = document.cookie.match(new RegExp(`(?:^|; )${THEME_COOKIE_KEY}=([^;]+)`));
+    if (cookieMatch) {
+        initialTheme = cookieMatch[1] === "light" ? "light" : "dark";
+    }
 
     try {
         const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
         if (storedTheme) {
             initialTheme = storedTheme;
-        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        } else if (!cookieMatch && window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
             initialTheme = "light";
         }
     } catch (error) {
-        initialTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+        initialTheme = cookieMatch && cookieMatch[1] === "light" ? "light" : document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
     }
 
     applyTheme(initialTheme);
@@ -656,73 +665,318 @@ const initThemeToggle = () => {
     updateThemeToggleLabel();
 };
 
-const products = [
+function formatCurrency(value, lang, currency = "EUR") {
+    return new Intl.NumberFormat(lang === "fr" ? "fr-FR" : "en-US", {
+        style: "currency",
+        currency: currency || "EUR",
+    }).format(value);
+}
+
+function calculateTotalsFromItems(items) {
+    const summary = items.reduce(
+        (acc, item) => {
+            const price = typeof item.price === "number" ? item.price : parseFloat(item.priceValue || item.price || 0);
+            const quantity = typeof item.quantity === "number" ? item.quantity : 1;
+            if (!Number.isNaN(price) && price > 0) {
+                acc.subtotal += price * quantity;
+            }
+            if (item.currency) {
+                acc.currency = item.currency;
+            }
+            return acc;
+        },
+        { subtotal: 0, currency: "EUR" }
+    );
+
+    const shipping = summary.subtotal >= 200 ? 0 : summary.subtotal > 0 ? 12 : 0;
+    return {
+        subtotal: Math.round(summary.subtotal * 100) / 100,
+        shipping,
+        total: Math.round((summary.subtotal + shipping) * 100) / 100,
+        currency: summary.currency || "EUR",
+    };
+}
+
+const fallbackProducts = [
     {
         id: "metropolis-parka",
+        slug: "metropolis-parka",
         name: { fr: "Parka Métropolis", en: "Metropolis Parka" },
+        description: {
+            fr: "Blouson technique avec isolation recyclée et finitions réfléchissantes.",
+            en: "Technical jacket with recycled insulation and reflective finishes.",
+        },
         price: { fr: "420 €", en: "€420" },
+        priceValue: 420,
+        currency: "EUR",
         category: "metropolis",
         size: ["s", "m", "l"],
         color: "black",
         availability: "in-stock",
-        tag: { fr: "Best-seller", en: "Best seller" }
+        tag: { fr: "Best-seller", en: "Best seller" },
     },
     {
         id: "essentials-hoodie",
+        slug: "essentials-hoodie",
         name: { fr: "Hoodie Essentials double épaisseur", en: "Double-layer Essentials Hoodie" },
+        description: {
+            fr: "Molleton brossé, coutures thermosoudées et capuche structurée.",
+            en: "Brushed fleece, heat-sealed seams and structured hood.",
+        },
         price: { fr: "190 €", en: "€190" },
+        priceValue: 190,
+        currency: "EUR",
         category: "essentials",
         size: ["xs", "s", "m", "l", "xl"],
         color: "grey",
         availability: "in-stock",
-        tag: { fr: "Nouveau", en: "New" }
+        tag: { fr: "Nouveau", en: "New" },
     },
     {
         id: "fluid-windbreaker",
+        slug: "fluid-windbreaker",
         name: { fr: "Windbreaker Fluid Dynamics", en: "Fluid Dynamics Windbreaker" },
+        description: {
+            fr: "Membrane respirante, ventilation latérale et cordons ajustables.",
+            en: "Breathable membrane, side vents and adjustable cords.",
+        },
         price: { fr: "260 €", en: "€260" },
+        priceValue: 260,
+        currency: "EUR",
         category: "fluid",
         size: ["s", "m", "l"],
         color: "accent",
         availability: "preorder",
-        tag: { fr: "Précommande", en: "Preorder" }
+        tag: { fr: "Précommande", en: "Preorder" },
     },
     {
         id: "atelier-sneakers",
+        slug: "atelier-sneakers",
         name: { fr: "Sneakers Atelier 06", en: "Atelier 06 Sneakers" },
+        description: {
+            fr: "Edition numérotée réalisée dans nos ateliers parisiens.",
+            en: "Numbered edition crafted in our Paris atelier.",
+        },
         price: { fr: "320 €", en: "€320" },
+        priceValue: 320,
+        currency: "EUR",
         category: "limited",
         size: ["s", "m", "l"],
         color: "white",
         availability: "restock",
-        tag: { fr: "Edition limitée", en: "Limited" }
-    }
+        tag: { fr: "Édition limitée", en: "Limited" },
+    },
 ];
 
-const cart = [
+let products = [...fallbackProducts];
+
+const fallbackCart = [
     {
         id: "metropolis-parka",
         name: { fr: "Parka Métropolis", en: "Metropolis Parka" },
         price: 420,
+        currency: "EUR",
         size: "M",
         color: "Black",
-        quantity: 1
+        quantity: 1,
     },
     {
         id: "essentials-hoodie",
         name: { fr: "Hoodie Essentials double épaisseur", en: "Double-layer Essentials Hoodie" },
         price: 190,
+        currency: "EUR",
         size: "L",
         color: "Charcoal",
-        quantity: 2
-    }
+        quantity: 2,
+    },
 ];
 
-const formatCurrency = (value, lang) => {
-    return new Intl.NumberFormat(lang === "fr" ? "fr-FR" : "en-US", {
-        style: "currency",
-        currency: "EUR"
-    }).format(value);
+let cartItems = [...fallbackCart];
+let cartTotals = calculateTotalsFromItems(cartItems);
+
+const normalizeProduct = (product = {}) => {
+    const name = product.name || {};
+    const priceValueCandidate =
+        typeof product.priceValue === "number"
+            ? product.priceValue
+            : typeof product.price === "number"
+            ? product.price
+            : parseFloat(product.price_amount ?? product.price ?? 0);
+    const priceValue = Number.isFinite(priceValueCandidate) && priceValueCandidate > 0 ? priceValueCandidate : 0;
+    const currency = product.currency || (product.price && product.price.currency) || "EUR";
+    const tag = product.tag || product.badge || {};
+    const size = Array.isArray(product.size)
+        ? product.size
+        : Array.isArray(product.sizes)
+        ? product.sizes
+        : typeof product.size === "string" && product.size.length
+        ? product.size.split(",").map((value) => value.trim()).filter(Boolean)
+        : [];
+    const color = product.color || (Array.isArray(product.colors) ? product.colors[0] : "black");
+    const availability = product.availability || product.status || "in-stock";
+    const description = product.description || {};
+
+    const resolvedId = product.id || product.slug || `vision-product-${Math.random().toString(36).slice(2, 10)}`;
+    const localizedName = {
+        fr: name.fr || product.name_fr || name.en || "Produit Vision",
+        en: name.en || product.name_en || name.fr || "Vision product",
+    };
+
+    const localizedDescription = {
+        fr: description.fr || product.description_fr || description.en || "",
+        en: description.en || product.description_en || description.fr || "",
+    };
+
+    const localizedPrice =
+        typeof product.price === "object" && !Array.isArray(product.price)
+            ? {
+                  fr: product.price.fr || formatCurrency(priceValue, "fr", currency),
+                  en: product.price.en || formatCurrency(priceValue, "en", currency),
+              }
+            : {
+                  fr: formatCurrency(priceValue, "fr", currency),
+                  en: formatCurrency(priceValue, "en", currency),
+              };
+
+    const localizedTag =
+        typeof tag === "object" && !Array.isArray(tag)
+            ? { fr: tag.fr || tag.en || "", en: tag.en || tag.fr || "" }
+            : { fr: tag || "", en: tag || "" };
+
+    return {
+        ...product,
+        id: resolvedId,
+        slug: product.slug || resolvedId,
+        name: localizedName,
+        description: localizedDescription,
+        priceValue,
+        price: localizedPrice,
+        currency,
+        category: product.category || product.collection || "all",
+        size,
+        color,
+        availability,
+        tag: localizedTag,
+    };
+};
+
+const normalizeCartItem = (item = {}) => {
+    const name = item.name || {};
+    const quantity = typeof item.quantity === "number" ? item.quantity : parseInt(item.quantity ?? 1, 10) || 1;
+    const priceValue =
+        typeof item.price === "number"
+            ? item.price
+            : typeof item.priceValue === "number"
+            ? item.priceValue
+            : parseFloat(item.unit_price ?? item.price ?? 0) || 0;
+
+    return {
+        id: item.id || item.product_id || "",
+        line_id: item.line_id || item.uid || generateLineIdFallback(item),
+        name: {
+            fr: name.fr || item.name_fr || name.en || "Produit Vision",
+            en: name.en || item.name_en || name.fr || "Vision product",
+        },
+        price: priceValue,
+        currency: item.currency || "EUR",
+        size: item.size || item.variant_size || "",
+        color: item.color || item.variant_color || "",
+        quantity,
+    };
+};
+
+const generateLineIdFallback = (item) => {
+    const id = item.id || item.product_id || "item";
+    const size = item.size || item.variant_size || "";
+    const color = item.color || item.variant_color || "";
+    return `${id}-${size}-${color}`;
+};
+
+const assignCartData = (items, totals) => {
+    cartItems = Array.isArray(items) ? items.map(normalizeCartItem) : [];
+    if (totals && typeof totals === "object") {
+        cartTotals = {
+            subtotal: Number(totals.subtotal) || 0,
+            shipping: Number(totals.shipping) || 0,
+            total: Number(totals.total) || 0,
+            currency: totals.currency || "EUR",
+        };
+    } else {
+        cartTotals = calculateTotalsFromItems(cartItems);
+    }
+};
+
+const resolveProductPriceLabel = (product, lang) => {
+    if (product.price && product.price[lang]) {
+        return product.price[lang];
+    }
+    return formatCurrency(product.priceValue || 0, lang, product.currency || "EUR");
+};
+
+const resolveProductTagLabel = (product, lang) => {
+    if (product.tag && product.tag[lang]) {
+        return product.tag[lang];
+    }
+    return "";
+};
+
+const fetchProducts = async () => {
+    try {
+        const response = await fetch(PRODUCTS_ENDPOINT, {
+            headers: { Accept: "application/json" },
+            credentials: "same-origin",
+        });
+        if (!response.ok) throw new Error("Products request failed");
+        const data = await response.json();
+        const list = Array.isArray(data) ? data : Array.isArray(data?.items) ? data.items : [];
+        if (list.length) {
+            products = list.map(normalizeProduct);
+        } else {
+            products = [...fallbackProducts];
+        }
+    } catch (error) {
+        console.warn("Using fallback products", error);
+        products = [...fallbackProducts];
+    }
+};
+
+const fetchCart = async () => {
+    try {
+        const response = await fetch(CART_ENDPOINT, {
+            headers: { Accept: "application/json" },
+            credentials: "same-origin",
+        });
+        if (!response.ok) throw new Error("Cart request failed");
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            assignCartData(data, null);
+        } else {
+            assignCartData(data.items, data.totals);
+        }
+    } catch (error) {
+        console.warn("Using fallback cart", error);
+        assignCartData(fallbackCart, calculateTotalsFromItems(fallbackCart));
+    }
+};
+
+const syncCart = async (payload) => {
+    try {
+        const response = await fetch(CART_ENDPOINT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            credentials: "same-origin",
+            body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error("Cart update failed");
+        const data = await response.json();
+        assignCartData(data.items, data.totals);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };
 
 const renderProducts = (lang) => {
@@ -731,37 +985,79 @@ const renderProducts = (lang) => {
 
     productList.innerHTML = "";
 
-    const filters = new FormData(document.querySelector("#filters-form"));
-    const selectedCategory = filters.get("category") || "all";
-    const selectedSize = filters.get("size") || "all";
-    const selectedColor = filters.get("color") || "all";
-    const selectedAvailability = filters.get("availability") || "all";
+    const filtersForm = document.querySelector("#filters-form");
+    const filters = filtersForm ? new FormData(filtersForm) : new FormData();
+    const selectedCategory = (filters.get("category") || "all").toString();
+    const selectedSize = (filters.get("size") || "all").toString();
+    const selectedColor = (filters.get("color") || "all").toString();
+    const selectedAvailability = (filters.get("availability") || "all").toString();
 
-    products
-        .filter((product) => {
-            const matchCategory = selectedCategory === "all" || product.category === selectedCategory;
-            const matchSize = selectedSize === "all" || product.size.includes(selectedSize);
-            const matchColor = selectedColor === "all" || product.color === selectedColor;
-            const matchAvailability = selectedAvailability === "all" || product.availability === selectedAvailability;
-            return matchCategory && matchSize && matchColor && matchAvailability;
-        })
-        .forEach((product) => {
-            const card = document.createElement("article");
-            card.className = "product-card";
-            card.innerHTML = `
-                <div class="product-image" aria-hidden="true">
-                    <div class="image-placeholder">${product.name[lang].split(" ")[0]}</div>
-                </div>
-                <div class="product-meta">
-                    <span>${product.tag[lang]}</span>
-                    <span class="price">${product.price[lang]}</span>
-                </div>
-                <h3>${product.name[lang]}</h3>
-                <p>${translations[lang].collections_copy}</p>
-                <button class="btn ghost" type="button">${lang === "fr" ? "Ajouter au panier" : "Add to cart"}</button>
-            `;
-            productList.appendChild(card);
-        });
+    const filtered = products.filter((product) => {
+        const sizes = Array.isArray(product.size) ? product.size : [];
+        const colors = Array.isArray(product.colors) ? product.colors : [product.color];
+        const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
+        const sizeMatch = selectedSize === "all" || sizes.includes(selectedSize);
+        const colorMatch = selectedColor === "all" || colors.includes(selectedColor);
+        const availabilityMatch = selectedAvailability === "all" || product.availability === selectedAvailability;
+        return categoryMatch && sizeMatch && colorMatch && availabilityMatch;
+    });
+
+    if (!filtered.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = lang === "fr" ? "Aucun produit ne correspond à votre sélection pour le moment." : "No products match your filters yet.";
+        productList.appendChild(empty);
+        return;
+    }
+
+    filtered.forEach((product) => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        const visual = document.createElement("div");
+        visual.className = "product-image";
+        visual.setAttribute("aria-hidden", "true");
+        const placeholder = document.createElement("div");
+        placeholder.className = "image-placeholder";
+        const productName = product.name?.[lang] || product.name?.fr || product.name?.en || "Vision";
+        placeholder.textContent = productName.split(" ")[0] || "Vision";
+        visual.appendChild(placeholder);
+        card.appendChild(visual);
+
+        const meta = document.createElement("div");
+        meta.className = "product-meta";
+        const tagLabel = resolveProductTagLabel(product, lang);
+        if (tagLabel) {
+            const tagSpan = document.createElement("span");
+            tagSpan.textContent = tagLabel;
+            meta.appendChild(tagSpan);
+        }
+        const priceSpan = document.createElement("span");
+        priceSpan.className = "price";
+        priceSpan.textContent = resolveProductPriceLabel(product, lang);
+        meta.appendChild(priceSpan);
+        card.appendChild(meta);
+
+        const title = document.createElement("h3");
+        title.textContent = productName;
+        card.appendChild(title);
+
+        const description = document.createElement("p");
+        description.textContent = product.description?.[lang] || translations[lang].collections_copy;
+        card.appendChild(description);
+
+        const button = document.createElement("button");
+        button.className = "btn ghost add-to-cart";
+        button.type = "button";
+        button.dataset.productId = product.id;
+        button.dataset.productAvailability = product.availability;
+        const isSoldOut = product.availability === "sold-out";
+        button.disabled = isSoldOut;
+        button.textContent = isSoldOut ? (lang === "fr" ? "Épuisé" : "Sold out") : lang === "fr" ? "Ajouter au panier" : "Add to cart";
+        card.appendChild(button);
+
+        productList.appendChild(card);
+    });
 };
 
 const renderCart = (lang) => {
@@ -774,36 +1070,144 @@ const renderCart = (lang) => {
 
     cartContainer.innerHTML = "";
 
-    let subtotal = 0;
+    if (!cartItems.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = lang === "fr" ? "Votre panier est vide pour l'instant." : "Your cart is empty for now.";
+        cartContainer.appendChild(empty);
+        subtotalEl.textContent = formatCurrency(0, lang, cartTotals.currency);
+        shippingEl.textContent = lang === "fr" ? "Offert" : "Free";
+        totalEl.textContent = formatCurrency(0, lang, cartTotals.currency);
+        return;
+    }
 
-    cart.forEach((item) => {
-        subtotal += item.price * item.quantity;
+    cartItems.forEach((item) => {
         const article = document.createElement("article");
         article.className = "cart-item";
-        article.innerHTML = `
-            <div class="image-placeholder">${item.name[lang].split(" ")[0]}</div>
-            <div>
-                <h3>${item.name[lang]}</h3>
-                <p>${lang === "fr" ? "Taille" : "Size"}: ${item.size}</p>
-                <p>${lang === "fr" ? "Couleur" : "Color"}: ${item.color}</p>
-            </div>
-            <div class="quantity-control" role="group" aria-label="${lang === "fr" ? "Quantité" : "Quantity"}">
-                <button type="button" aria-label="${lang === "fr" ? "Réduire" : "Decrease"}">-</button>
-                <span>${item.quantity}</span>
-                <button type="button" aria-label="${lang === "fr" ? "Augmenter" : "Increase"}">+</button>
-            </div>
-        `;
+
+        const visual = document.createElement("div");
+        visual.className = "image-placeholder";
+        const itemName = item.name?.[lang] || item.name?.fr || item.name?.en || "Vision";
+        visual.textContent = itemName.split(" ")[0] || "Vision";
+        article.appendChild(visual);
+
+        const details = document.createElement("div");
+        const nameHeading = document.createElement("h3");
+        nameHeading.textContent = itemName;
+        details.appendChild(nameHeading);
+
+        const sizeLine = document.createElement("p");
+        sizeLine.textContent = `${lang === "fr" ? "Taille" : "Size"}: ${item.size || (lang === "fr" ? "Unique" : "One size")}`;
+        details.appendChild(sizeLine);
+
+        const colorLine = document.createElement("p");
+        colorLine.textContent = `${lang === "fr" ? "Couleur" : "Color"}: ${item.color || (lang === "fr" ? "Standard" : "Default")}`;
+        details.appendChild(colorLine);
+
+        article.appendChild(details);
+
+        const controls = document.createElement("div");
+        controls.className = "quantity-control";
+        controls.setAttribute("role", "group");
+        controls.setAttribute("aria-label", lang === "fr" ? "Quantité" : "Quantity");
+
+        const decrease = document.createElement("button");
+        decrease.type = "button";
+        decrease.dataset.action = "decrease";
+        decrease.dataset.lineId = item.line_id;
+        decrease.setAttribute("aria-label", lang === "fr" ? "Réduire" : "Decrease");
+        decrease.textContent = "-";
+        controls.appendChild(decrease);
+
+        const quantity = document.createElement("span");
+        quantity.textContent = String(item.quantity);
+        controls.appendChild(quantity);
+
+        const increase = document.createElement("button");
+        increase.type = "button";
+        increase.dataset.action = "increase";
+        increase.dataset.lineId = item.line_id;
+        increase.setAttribute("aria-label", lang === "fr" ? "Augmenter" : "Increase");
+        increase.textContent = "+";
+        controls.appendChild(increase);
+
+        article.appendChild(controls);
         cartContainer.appendChild(article);
     });
 
-    const shipping = subtotal > 200 ? 0 : 12;
-    subtotalEl.textContent = formatCurrency(subtotal, lang);
-    shippingEl.textContent = shipping === 0 ? (lang === "fr" ? "Offert" : "Free") : formatCurrency(shipping, lang);
-    totalEl.textContent = formatCurrency(subtotal + shipping, lang);
+    subtotalEl.textContent = formatCurrency(cartTotals.subtotal, lang, cartTotals.currency);
+    shippingEl.textContent = cartTotals.shipping === 0 ? (lang === "fr" ? "Offert" : "Free") : formatCurrency(cartTotals.shipping, lang, cartTotals.currency);
+    totalEl.textContent = formatCurrency(cartTotals.total, lang, cartTotals.currency);
 };
+
+const bindAddToCart = () => {
+    document.addEventListener("click", async (event) => {
+        const button = event.target.closest(".add-to-cart");
+        if (!button) return;
+
+        const productId = button.dataset.productId;
+        if (!productId || button.disabled) return;
+
+        const availability = button.dataset.productAvailability;
+        if (availability === "sold-out") return;
+
+        button.disabled = true;
+        button.classList.add("loading");
+
+        try {
+            await syncCart({
+                action: "add",
+                product_id: productId,
+                quantity: 1,
+                size: button.dataset.size || "",
+                color: button.dataset.color || "",
+            });
+            renderCart(getCurrentLanguage());
+        } catch (error) {
+            console.error("Unable to add product to cart", error);
+        } finally {
+            button.classList.remove("loading");
+            if (availability !== "sold-out") {
+                button.disabled = false;
+            }
+        }
+    });
+};
+
+const bindCartInteractions = () => {
+    document.addEventListener("click", async (event) => {
+        const button = event.target.closest("#cart-items button[data-action]");
+        if (!button) return;
+
+        const lineId = button.dataset.lineId;
+        const action = button.dataset.action;
+        if (!lineId || !action) return;
+
+        const item = cartItems.find((entry) => entry.line_id === lineId);
+        if (!item) return;
+
+        try {
+            if (action === "increase") {
+                await syncCart({ action: "update", line_id: lineId, quantity: item.quantity + 1 });
+            } else if (action === "decrease") {
+                const nextQuantity = item.quantity - 1;
+                if (nextQuantity <= 0) {
+                    await syncCart({ action: "remove", line_id: lineId });
+                } else {
+                    await syncCart({ action: "update", line_id: lineId, quantity: nextQuantity });
+                }
+            }
+            renderCart(getCurrentLanguage());
+        } catch (error) {
+            console.error("Unable to update cart", error);
+        }
+    });
+};
+
 
 const updateTranslations = (lang) => {
     document.documentElement.lang = lang === "fr" ? "fr" : "en";
+    document.cookie = `${LANG_COOKIE_KEY}=${lang === "fr" ? "fr" : "en"};path=/;max-age=31536000;samesite=Lax`;
     document.querySelectorAll("[data-i18n]").forEach((el) => {
         const key = el.getAttribute("data-i18n");
         if (translations[lang][key]) {
@@ -828,6 +1232,11 @@ const initLangToggle = () => {
     if (!toggle) return;
 
     let currentLang = toggle.dataset.lang === "en" ? "en" : "fr";
+    const cookieMatch = document.cookie.match(new RegExp(`(?:^|; )${LANG_COOKIE_KEY}=([^;]+)`));
+    if (cookieMatch) {
+        currentLang = cookieMatch[1] === "en" ? "en" : "fr";
+    }
+    toggle.dataset.lang = currentLang;
 
     toggle.addEventListener("click", () => {
         currentLang = currentLang === "fr" ? "en" : "fr";
@@ -885,14 +1294,12 @@ const initFilters = () => {
 
     filtersForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        renderProducts(document.documentElement.lang === "fr" ? "fr" : "en");
+        renderProducts(getCurrentLanguage());
     });
 
     filtersForm.addEventListener("reset", () => {
-        setTimeout(() => renderProducts(document.documentElement.lang === "fr" ? "fr" : "en"), 0);
+        setTimeout(() => renderProducts(getCurrentLanguage()), 0);
     });
-
-    renderProducts("fr");
 };
 
 const initCookiesBanner = () => {
@@ -919,7 +1326,12 @@ const init = () => {
     initNewsletter();
     initForms();
     initFilters();
-    renderCart("fr");
+    bindAddToCart();
+    bindCartInteractions();
+    renderProducts(getCurrentLanguage());
+    renderCart(getCurrentLanguage());
+    fetchProducts().then(() => renderProducts(getCurrentLanguage()));
+    fetchCart().then(() => renderCart(getCurrentLanguage()));
     initCookiesBanner();
 };
 
