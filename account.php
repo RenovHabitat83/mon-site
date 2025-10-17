@@ -7,84 +7,102 @@ include __DIR__ . '/includes/layout/head.php';
 include __DIR__ . '/includes/layout/header.php';
 ?>
 <main>
-        <section class="page-hero">
-            <div class="container">
-                <p class="eyebrow" data-i18n="account_tag">Mon espace</p>
-                <h1 data-i18n="account_title">Gérez votre profil Vision</h1>
-                <p data-i18n="account_intro">Suivez vos commandes, gérez vos adresses, vos préférences de livraison et vos listes d'envies.</p>
-            </div>
-        </section>
+    <section class="py-5 bg-white">
+        <div class="container py-4 text-center">
+            <span class="text-uppercase text-primary fw-semibold small">Mon espace</span>
+            <h1 class="fw-bold display-6 mt-3">Gérez votre profil Vision</h1>
+            <p class="text-secondary mx-auto" style="max-width: 720px;">Suivez vos commandes, gérez vos adresses, vos préférences de livraison et vos listes d'envies.</p>
+        </div>
+    </section>
 
-        <section class="account-section">
-            <div class="container account-grid">
-                <div class="account-card">
-                    <h2 data-i18n="account_login_title">Connexion</h2>
-                    <form class="account-form" id="login-form" novalidate>
-                        <div class="form-group">
-                            <label for="login-email" data-i18n="account_email">Email</label>
-                            <input type="email" id="login-email" name="email" required>
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm p-4">
+                        <ul class="nav nav-pills account-tabs mb-4" id="accountTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="login-tab" data-bs-toggle="pill" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Connexion</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="register-tab" data-bs-toggle="pill" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Créer un compte</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="accountTabContent">
+                            <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+                                <form class="row g-3" novalidate>
+                                    <div class="col-12">
+                                        <label class="form-label" for="login-email">Email</label>
+                                        <input class="form-control" type="email" id="login-email" required placeholder="vous@vision.com">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label" for="login-password">Mot de passe</label>
+                                        <input class="form-control" type="password" id="login-password" required>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between align-items-center">
+                                        <a class="link-secondary small" href="#">Mot de passe oublié ?</a>
+                                        <button class="btn btn-primary" type="submit">Se connecter</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+                                <form class="row g-3" novalidate>
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="register-name">Nom complet</label>
+                                        <input class="form-control" type="text" id="register-name" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="register-email">Email</label>
+                                        <input class="form-control" type="email" id="register-email" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="register-password">Mot de passe</label>
+                                        <input class="form-control" type="password" id="register-password" minlength="8" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="register-preferences">Préférences</label>
+                                        <select class="form-select" id="register-preferences">
+                                            <option>Streetwear structuré</option>
+                                            <option>Casual minimal</option>
+                                            <option>Drops exclusifs</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 form-check">
+                                        <input class="form-check-input" type="checkbox" id="register-newsletter" checked>
+                                        <label class="form-check-label" for="register-newsletter">Je souhaite recevoir la newsletter Vision.</label>
+                                    </div>
+                                    <div class="col-12 text-end">
+                                        <button class="btn btn-primary" type="submit">Créer mon compte</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="login-password" data-i18n="account_password">Mot de passe</label>
-                            <input type="password" id="login-password" name="password" required>
-                        </div>
-                        <button type="submit" class="btn" data-i18n="account_login_button">Se connecter</button>
-                        <a class="text-link" href="#" data-i18n="account_forgot">Mot de passe oublié ?</a>
-                        <p class="form-feedback" role="status" aria-live="polite"></p>
-                    </form>
+                    </div>
                 </div>
-                <div class="account-card">
-                    <h2 data-i18n="account_register_title">Créer un compte</h2>
-                    <form class="account-form" id="register-form" novalidate>
-                        <div class="form-group">
-                            <label for="register-name" data-i18n="account_name">Nom complet</label>
-                            <input type="text" id="register-name" name="name" required>
+                <div class="col-lg-4">
+                    <div class="order-summary p-4 mb-4">
+                        <h2 class="h5 fw-bold mb-3">Suivi de commande</h2>
+                        <form class="row g-3" novalidate>
+                            <div class="col-12">
+                                <label class="form-label" for="tracking-number">Numéro de commande</label>
+                                <input class="form-control" type="text" id="tracking-number" required placeholder="VISION-0001">
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-outline-primary w-100" type="submit">Suivre</button>
+                            </div>
+                        </form>
+                        <p class="text-secondary small mb-0">Recevez des notifications en temps réel, ajustez vos créneaux de livraison et programmez un retour.</p>
+                    </div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h2 class="h5 fw-bold">Vision+</h2>
+                            <p class="text-secondary">Accès prioritaire aux drops, personnalisation des pièces et retours gratuits.</p>
+                            <a class="btn btn-primary w-100" href="shop.php">Découvrir Vision+</a>
                         </div>
-                        <div class="form-group">
-                            <label for="register-email" data-i18n="account_email">Email</label>
-                            <input type="email" id="register-email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-password" data-i18n="account_password">Mot de passe</label>
-                            <input type="password" id="register-password" name="password" minlength="8" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-preferences" data-i18n="account_preferences">Préférences</label>
-                            <select id="register-preferences" name="preferences">
-                                <option value="street" data-i18n="pref_street">Streetwear structuré</option>
-                                <option value="casual" data-i18n="pref_casual">Casual minimal</option>
-                                <option value="limited" data-i18n="pref_limited">Drops exclusifs</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn" data-i18n="account_register_button">Créer mon compte</button>
-                        <label class="checkbox">
-                            <input type="checkbox" name="newsletter" checked>
-                            <span data-i18n="account_newsletter">Je souhaite recevoir la newsletter Vision.</span>
-                        </label>
-                        <p class="form-feedback" role="status" aria-live="polite"></p>
-                    </form>
-                </div>
-                <div class="account-card">
-                    <h2 data-i18n="account_tracking_title">Suivi de commande</h2>
-                    <form class="account-form" id="tracking-form" novalidate>
-                        <div class="form-group">
-                            <label for="tracking-number" data-i18n="account_tracking_number">Numéro de commande</label>
-                            <input type="text" id="tracking-number" name="order" required>
-                        </div>
-                        <button type="submit" class="btn" data-i18n="account_tracking_button">Suivre</button>
-                        <p class="form-feedback" role="status" aria-live="polite"></p>
-                    </form>
-                    <p data-i18n="account_tracking_copy">Recevez des notifications en temps réel, ajustez vos créneaux de livraison et programmez un retour.</p>
+                    </div>
                 </div>
             </div>
-        </section>
-
-        <section class="cta-banner">
-            <div class="container">
-                <h2 data-i18n="account_cta_title">Activez Vision+</h2>
-                <p data-i18n="account_cta_copy">Accès prioritaire aux drops, personnalisation des pièces et retours gratuits.</p>
-                <a class="btn" href="shop.php" data-i18n="account_cta_button">Découvrir Vision+</a>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 <?php include __DIR__ . '/includes/layout/footer.php'; ?>
