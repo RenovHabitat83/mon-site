@@ -64,6 +64,34 @@ function get_fallback_products(): array
     return $products;
 }
 
+function fetch_products_from_database(): array
+{
+    try {
+        $pdo = Database::getConnection();
+        $statement = $pdo->query('SELECT * FROM products ORDER BY created_at DESC, id DESC');
+        $rows = $statement->fetchAll();
+
+        if (!$rows) {
+            return [];
+        }
+
+        return array_map('transform_product_row', $rows);
+    } catch (Throwable $exception) {
+        return [];
+    }
+}
+
+function get_products(): array
+{
+    $databaseProducts = fetch_products_from_database();
+
+    if (!empty($databaseProducts)) {
+        return $databaseProducts;
+    }
+
+    return get_fallback_products();
+}
+
 function get_fallback_cart(): array
 {
     static $cart = null;
@@ -158,6 +186,8 @@ function transform_product_row(array $row): array
 {
     return [
         'id' => (string) ($row['slug'] ?? $row['sku'] ?? $row['id'] ?? ''),
+        'slug' => (string) ($row['slug'] ?? ''),
+        'sku' => (string) ($row['sku'] ?? ''),
         'name' => [
             'fr' => $row['name_fr'] ?? ($row['name'] ?? ''),
             'en' => $row['name_en'] ?? ($row['name'] ?? ''),
@@ -176,6 +206,8 @@ function transform_product_row(array $row): array
             'fr' => $row['badge_fr'] ?? '',
             'en' => $row['badge_en'] ?? ($row['badge_fr'] ?? ''),
         ],
+        'created_at' => $row['created_at'] ?? null,
+        'updated_at' => $row['updated_at'] ?? null,
     ];
 }
 

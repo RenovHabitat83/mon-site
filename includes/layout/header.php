@@ -22,6 +22,9 @@
                     <li class="nav-item">
                         <a class="nav-link" data-page-link="contact" href="<?= htmlspecialchars(base_url('contact.php'), ENT_QUOTES) ?>">Contact</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-page-link="admin" href="<?= htmlspecialchars(base_url('admin/index.php'), ENT_QUOTES) ?>">Administration</a>
+                    </li>
                     <li class="nav-item ms-lg-3">
                         <a class="btn btn-primary" href="<?= htmlspecialchars(base_url('cart.php'), ENT_QUOTES) ?>">Panier</a>
                     </li>

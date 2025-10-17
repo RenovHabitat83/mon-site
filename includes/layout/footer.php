@@ -29,6 +29,7 @@
                         <li><a class="footer-link" href="<?= htmlspecialchars(base_url('policies.php#returns'), ENT_QUOTES) ?>">Politique de retour</a></li>
                         <li><a class="footer-link" href="<?= htmlspecialchars(base_url('policies.php#delivery'), ENT_QUOTES) ?>">Livraison & suivi</a></li>
                         <li><a class="footer-link" href="<?= htmlspecialchars(base_url('policies.php#privacy'), ENT_QUOTES) ?>">Confidentialité & cookies</a></li>
+                        <li><a class="footer-link" href="<?= htmlspecialchars(base_url('admin/index.php'), ENT_QUOTES) ?>">Administration</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">

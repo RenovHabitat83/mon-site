@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/init.php';
 $pageSlug = 'shop';
 $pageTitle = 'Vision — Boutique';
 $pageDescription = "Explorez les collections Vision et filtrez vos essentiels.";
-$products = get_fallback_products();
+$products = get_products();
 include __DIR__ . '/includes/layout/head.php';
 include __DIR__ . '/includes/layout/header.php';
 ?>
