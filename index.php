@@ -7,221 +7,218 @@ include __DIR__ . '/includes/layout/head.php';
 include __DIR__ . '/includes/layout/header.php';
 ?>
 <main>
-        <section class="hero" id="hero">
-            <div class="container hero-content">
-                <div>
-                    <p class="eyebrow" data-i18n="hero_tag">Nouvelle vague streetwear</p>
-                    <h1 data-i18n="hero_title">Vision — L'élégance urbaine taillée pour le quotidien</h1>
-                    <p class="lead" data-i18n="hero_copy">Des silhouettes minimalistes, des matières responsables et une allure qui capte l'instant. Découvrez des pièces pensées pour bouger avec vous.</p>
-                    <div class="hero-actions">
-                        <a class="btn" href="shop.php" data-i18n="hero_cta_primary">Explorer la collection</a>
-                        <a class="btn ghost" href="#limited" data-i18n="hero_cta_secondary">Voir les éditions limitées</a>
+    <section class="hero-section py-5 py-lg-5">
+        <div class="container py-5">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <span class="badge rounded-pill text-bg-light text-uppercase mb-3">Nouvelle vague</span>
+                    <h1 class="display-5 fw-bold mb-4">Vision — l'élégance urbaine taillée pour le quotidien</h1>
+                    <p class="lead mb-4">Des silhouettes minimalistes, des matières responsables et une allure qui capte l'instant. Découvrez des pièces pensées pour bouger avec vous.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                        <a class="btn btn-light btn-lg" href="shop.php">Explorer la collection</a>
+                        <a class="btn btn-outline-light btn-lg" href="#editions">Voir les éditions limitées</a>
                     </div>
                 </div>
-                <div class="hero-visual" role="presentation">
-                    <div class="hero-card">
-                        <span class="badge" data-i18n="badge_new">Nouveautés</span>
-                        <h2 data-i18n="hero_card_title">Drop Vision 07</h2>
-                        <p data-i18n="hero_card_copy">Parka technique, hoodie double épaisseur, pantalon cargo texturé.</p>
-                        <a class="text-link" href="shop.php" data-i18n="hero_card_link">Découvrir la capsule</a>
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="position-relative">
+                        <img src="assets/images/placeholder-3d.jpg" alt="Capsule Vision" class="img-fluid rounded-4 shadow-lg">
+                        <div class="position-absolute bottom-0 start-0 translate-middle-y bg-white text-dark rounded-4 p-4 shadow-lg" style="max-width: 260px;">
+                            <span class="badge text-bg-primary rounded-pill mb-2">Drop Vision 07</span>
+                            <p class="mb-1 small text-uppercase text-secondary">Capsule à venir</p>
+                            <p class="mb-0 fw-semibold">Parka technique, hoodie double épaisseur et pantalon cargo texturé.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="highlight-products" id="selection">
-            <div class="container">
-                <div class="section-header light">
-                    <span class="eyebrow" data-i18n="highlight_tag">Sélection lumineuse</span>
-                    <h2 data-i18n="highlight_title">Une zone claire pour repérer vos prochains essentiels</h2>
-                    <p data-i18n="highlight_copy">Visualisez dès maintenant trois emplacements produits dédiés à vos futurs best-sellers Vision.</p>
+    <section class="py-5">
+        <div class="container">
+            <div class="section-heading">
+                <span class="text-uppercase text-primary fw-semibold small">Sélection lumineuse</span>
+                <h2 class="fw-bold mt-2">Repérez vos prochains essentiels</h2>
+                <p class="text-secondary">Trois emplacements dédiés à vos futurs best-sellers Vision. Inspirez-vous et projetez vos produits phares dans un univers premium.</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100 border-0 card-lift">
+                        <div class="card-body">
+                            <div class="feature-icon">01</div>
+                            <h3 class="h5">Emplacement produit n°1</h3>
+                            <p class="text-secondary">Présentez votre pièce phare avec photo, nom, prix et appel à l'action harmonisés.</p>
+                            <span class="badge rounded-pill text-bg-primary">Prix à définir</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="highlight-grid" role="list">
-                    <article class="highlight-card" role="listitem">
-                        <div class="highlight-media" aria-hidden="true">
-                            <span class="slot-id">01</span>
-                            <span class="media-note" data-i18n="highlight_visual">Visuel 4:5</span>
+                <div class="col">
+                    <div class="card h-100 border-0 card-lift">
+                        <div class="card-body">
+                            <div class="feature-icon">02</div>
+                            <h3 class="h5">Emplacement produit n°2</h3>
+                            <p class="text-secondary">Mettez en avant une nouveauté ou une édition limitée avec storytelling immersif.</p>
+                            <span class="badge rounded-pill text-bg-primary">Prix à définir</span>
                         </div>
-                        <div class="highlight-body">
-                            <span class="highlight-label" data-i18n="highlight_product1_label">Produit à venir</span>
-                            <h3 data-i18n="highlight_product1_name">Emplacement produit n°1</h3>
-                            <p data-i18n="highlight_product1_copy">Réservez cet espace pour votre pièce phare : photo, nom, prix et appel à l'action s'y intégreront parfaitement.</p>
-                            <p class="highlight-price" data-i18n="highlight_price_placeholder">Prix à définir</p>
-                            <button class="btn ghost" type="button" disabled data-i18n="highlight_cta">Bientôt disponible</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 card-lift">
+                        <div class="card-body">
+                            <div class="feature-icon">03</div>
+                            <h3 class="h5">Emplacement produit n°3</h3>
+                            <p class="text-secondary">Réservez cet espace pour vos collaborations exclusives ou drops en précommande.</p>
+                            <span class="badge rounded-pill text-bg-primary">Prix à définir</span>
                         </div>
-                    </article>
-                    <article class="highlight-card" role="listitem">
-                        <div class="highlight-media" aria-hidden="true">
-                            <span class="slot-id">02</span>
-                            <span class="media-note" data-i18n="highlight_visual">Visuel 4:5</span>
-                        </div>
-                        <div class="highlight-body">
-                            <span class="highlight-label" data-i18n="highlight_product2_label">Produit à venir</span>
-                            <h3 data-i18n="highlight_product2_name">Emplacement produit n°2</h3>
-                            <p data-i18n="highlight_product2_copy">Mettez en avant une nouveauté ou une édition limitée avec visuel 3:4 et fiche descriptive concise.</p>
-                            <p class="highlight-price" data-i18n="highlight_price_placeholder">Prix à définir</p>
-                            <button class="btn ghost" type="button" disabled data-i18n="highlight_cta">Bientôt disponible</button>
-                        </div>
-                    </article>
-                    <article class="highlight-card" role="listitem">
-                        <div class="highlight-media" aria-hidden="true">
-                            <span class="slot-id">03</span>
-                            <span class="media-note" data-i18n="highlight_visual">Visuel 4:5</span>
-                        </div>
-                        <div class="highlight-body">
-                            <span class="highlight-label" data-i18n="highlight_product3_label">Produit à venir</span>
-                            <h3 data-i18n="highlight_product3_name">Emplacement produit n°3</h3>
-                            <p data-i18n="highlight_product3_copy">Préparez ici votre drop exclusif : matériaux, storytelling et boutons d'ajout au panier seront mis en valeur.</p>
-                            <p class="highlight-price" data-i18n="highlight_price_placeholder">Prix à définir</p>
-                            <button class="btn ghost" type="button" disabled data-i18n="highlight_cta">Bientôt disponible</button>
-                        </div>
-                    </article>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="grid-section" id="collections">
-            <div class="container section-header">
-                <span class="eyebrow" data-i18n="collections_tag">Collections</span>
-                <h2 data-i18n="collections_title">Des pièces essentielles pour un dressing visionnaire</h2>
-                <p data-i18n="collections_copy">Composez votre uniforme urbain avec des basiques revisités, des coupes oversize maîtrisées et des détails techniques pensés pour durer.</p>
-            </div>
-            <div class="container collection-grid">
-                <article class="collection-card">
-                    <h3 data-i18n="collection_metro_title">Ligne Métropolis</h3>
-                    <p data-i18n="collection_metro_copy">Blousons modulaires, pantalons cargos ajustables et accessoires réfléchissants inspirés de la ville nocturne.</p>
-                    <a class="text-link" href="shop.php#metropolis" data-i18n="collection_metro_link">Shopper la ligne</a>
-                </article>
-                <article class="collection-card">
-                    <h3 data-i18n="collection_essentials_title">Essentials 24/7</h3>
-                    <p data-i18n="collection_essentials_copy">Hoodies premium, tees respirants et joggers sculptés pour l'agilité. Le confort sans compromis.</p>
-                    <a class="text-link" href="shop.php#essentials" data-i18n="collection_essentials_link">Shopper les essentiels</a>
-                </article>
-                <article class="collection-card">
-                    <h3 data-i18n="collection_fluid_title">Fluid Dynamics</h3>
-                    <p data-i18n="collection_fluid_copy">Pièces unisexes, tissus techniques semi-transparents et superpositions légères inspirées du mouvement.</p>
-                    <a class="text-link" href="shop.php#fluid" data-i18n="collection_fluid_link">Shopper la capsule</a>
-                </article>
-            </div>
-        </section>
-
-        <section class="split-section" id="values">
-            <div class="container split">
-                <div>
-                    <span class="eyebrow" data-i18n="values_tag">Manifeste</span>
-                    <h2 data-i18n="values_title">Un vestiaire engagé pour une communauté en mouvement</h2>
-                    <ul class="value-list">
-                        <li data-i18n="values_1">Production responsable en ateliers certifiés en Europe et au Japon.</li>
-                        <li data-i18n="values_2">Matériaux recyclés, coton bio, cuir vegan et emballages compostables.</li>
-                        <li data-i18n="values_3">Création inclusive : coupes pensées pour toutes les morphologies.</li>
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-5">
+                    <span class="text-uppercase text-primary fw-semibold small">Manifeste</span>
+                    <h2 class="fw-bold mt-3">Un vestiaire engagé pour une communauté en mouvement</h2>
+                    <p class="text-secondary">Production responsable, matériaux recyclés et création inclusive : Vision imagine un vestiaire haut de gamme qui respecte la planète et les villes qui nous inspirent.</p>
+                    <ul class="list-unstyled text-secondary mb-4">
+                        <li class="mb-2">• Production responsable en ateliers certifiés en Europe et au Japon.</li>
+                        <li class="mb-2">• Matériaux recyclés, coton bio et emballages compostables.</li>
+                        <li>• Coupes pensées pour toutes les morphologies.</li>
                     </ul>
-                    <a class="btn ghost" href="about.php" data-i18n="values_cta">Lire notre histoire</a>
+                    <a class="btn btn-outline-primary" href="about.php">Lire notre histoire</a>
                 </div>
-                <div class="metrics">
-                    <div class="metric">
-                        <span class="metric-value">92%</span>
-                        <span class="metric-label" data-i18n="metric_satisfaction">de clients satisfaits</span>
+                <div class="col-lg-7">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="stat-card text-center">
+                                <h3>92%</h3>
+                                <p class="mb-0 text-secondary">Clients satisfaits</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card text-center">
+                                <h3>48h</h3>
+                                <p class="mb-0 text-secondary">Expédition moyenne</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card text-center">
+                                <h3>35</h3>
+                                <p class="mb-0 text-secondary">Pays livrés</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-value">48h</span>
-                        <span class="metric-label" data-i18n="metric_shipping">Expédition moyenne</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5" id="editions">
+        <div class="container">
+            <div class="section-heading">
+                <span class="text-uppercase text-primary fw-semibold small">Éditions limitées</span>
+                <h2 class="fw-bold mt-2">Drops exclusifs & collaborations visionnaires</h2>
+                <p class="text-secondary">Alertes en temps réel, quantités restreintes et design signature. Ne manquez aucun drop de la communauté Vision.</p>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100 border-0 card-lift">
+                        <div class="card-body">
+                            <span class="badge text-bg-primary rounded-pill mb-3">Collaboration</span>
+                            <h3 class="h5">Vision x Concrete Waves</h3>
+                            <p class="text-secondary">Capsule inspirée des textures urbaines et des graffitis lumineux.</p>
+                            <a class="link-primary fw-semibold" href="shop.php#limited">Accéder au drop</a>
+                        </div>
                     </div>
-                    <div class="metric">
-                        <span class="metric-value">35</span>
-                        <span class="metric-label" data-i18n="metric_cities">Pays livrés</span>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 card-lift">
+                        <div class="card-body">
+                            <span class="badge text-bg-primary rounded-pill mb-3">Série limitée</span>
+                            <h3 class="h5">Programme Atelier 06</h3>
+                            <p class="text-secondary">Pièces numérotées, broderies à la main et packaging signature Vision.</p>
+                            <a class="link-primary fw-semibold" href="shop.php#limited">Réserver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 card-lift">
+                        <div class="card-body">
+                            <span class="badge text-bg-primary rounded-pill mb-3">Restock</span>
+                            <h3 class="h5">Archive Restock</h3>
+                            <p class="text-secondary">Les pièces iconiques reviennent en quantités très limitées.</p>
+                            <a class="link-primary fw-semibold" href="shop.php#archive">Être notifié·e</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="feature-section" id="limited">
-            <div class="container section-header">
-                <span class="eyebrow" data-i18n="limited_tag">Éditions limitées</span>
-                <h2 data-i18n="limited_title">Drops exclusifs & collaborations visionnaires</h2>
-                <p data-i18n="limited_copy">Alertes en temps réel, quantités restreintes, design signature. Ne manquez aucun drop.</p>
-            </div>
-            <div class="container limited-grid">
-                <article class="limited-card">
-                    <span class="badge" data-i18n="badge_collab">Collaboration</span>
-                    <h3 data-i18n="limited_card1_title">Vision x Concrete Waves</h3>
-                    <p data-i18n="limited_card1_copy">Capsule inspirée des textures urbaines et des graffitis lumineux.</p>
-                    <a class="text-link" href="shop.php#limited" data-i18n="limited_card1_link">Accéder au drop</a>
-                </article>
-                <article class="limited-card">
-                    <span class="badge" data-i18n="badge_limited">Série limitée</span>
-                    <h3 data-i18n="limited_card2_title">Programme Atelier 06</h3>
-                    <p data-i18n="limited_card2_copy">Pièces numérotées, broderies à la main, packaging signature Vision.</p>
-                    <a class="text-link" href="shop.php#atelier" data-i18n="limited_card2_link">Réserver</a>
-                </article>
-                <article class="limited-card">
-                    <span class="badge" data-i18n="badge_restocks">Restock</span>
-                    <h3 data-i18n="limited_card3_title">Archive Restock</h3>
-                    <p data-i18n="limited_card3_copy">Les pièces iconiques reviennent en quantités très limitées.</p>
-                    <a class="text-link" href="shop.php#archive" data-i18n="limited_card3_link">Être notifié·e</a>
-                </article>
-            </div>
-        </section>
-
-        <section class="immersive-section" id="immersive">
-            <div class="container split">
-                <div>
-                    <span class="eyebrow" data-i18n="immersive_tag">Vue 360°</span>
-                    <h2 data-i18n="immersive_title">Interagissez avec nos pièces en 3D</h2>
-                    <p data-i18n="immersive_copy">Manipulez chaque vêtement, inspectez les textures et choisissez la combinaison qui vous ressemble. La technologie Vision 360° rend l'expérience d'achat tactile.</p>
-                    <ul class="value-list">
-                        <li data-i18n="immersive_point1">Visualisation multi-angle et zoom haute définition.</li>
-                        <li data-i18n="immersive_point2">Prévisualisation des variations de couleurs en temps réel.</li>
-                        <li data-i18n="immersive_point3">Compatibilité mobile, tablette et desktop.</li>
-                    </ul>
-                </div>
-                <div class="viewer">
-                    <model-viewer src="assets/models/sample-model.glb" alt="Veste Vision 3D" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="assets/images/placeholder-3d.jpg" shadow-intensity="1"></model-viewer>
-                    <p class="viewer-note" data-i18n="immersive_note">Aperçu prototype — la modélisation finale sera intégrée lors de la réception des fichiers 3D.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="feature-section" id="services">
-            <div class="container section-header">
-                <span class="eyebrow" data-i18n="services_tag">Services</span>
-                <h2 data-i18n="services_title">Une expérience e-commerce fluide et sécurisée</h2>
-            </div>
-            <div class="container services-grid">
-                <article class="service-card">
-                    <h3 data-i18n="service_payment_title">Paiement sécurisé</h3>
-                    <p data-i18n="service_payment_copy">Carte bancaire, PayPal et wallets numériques avec chiffrement AES-256.</p>
-                </article>
-                <article class="service-card">
-                    <h3 data-i18n="service_delivery_title">Livraison mondiale</h3>
-                    <p data-i18n="service_delivery_copy">Suivi en temps réel, partenaires DHL Express & Chronopost, options green.</p>
-                </article>
-                <article class="service-card">
-                    <h3 data-i18n="service_returns_title">Retours simplifiés</h3>
-                    <p data-i18n="service_returns_copy">Portail de retours intégré, étiquettes prépayées, remboursement rapide.</p>
-                </article>
-                <article class="service-card">
-                    <h3 data-i18n="service_support_title">Support humain</h3>
-                    <p data-i18n="service_support_copy">Équipe dédiée multilingue, réponses sous 24h et assistance live chat.</p>
-                </article>
-            </div>
-        </section>
-
-        <section class="newsletter" id="newsletter">
-            <div class="container newsletter-inner">
-                <div>
-                    <span class="eyebrow" data-i18n="newsletter_tag">Newsletter</span>
-                    <h2 data-i18n="newsletter_title">Recevez les drops avant tout le monde</h2>
-                    <p data-i18n="newsletter_copy">Inscrivez-vous pour accéder aux préventes, codes promo exclusifs et invitations à nos évènements.</p>
-                </div>
-                <form class="newsletter-form" novalidate>
-                    <label for="newsletter-email" data-i18n="newsletter_label">Votre email</label>
-                    <div class="newsletter-input">
-                        <input type="email" id="newsletter-email" name="email" placeholder="name@email.com" required>
-                        <button type="submit" class="btn" data-i18n="newsletter_cta">S'inscrire</button>
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg">
+                        <iframe src="https://www.youtube.com/embed/Zi_XLOBDo_Y" title="Vision Experience" allowfullscreen></iframe>
                     </div>
-                    <p class="form-feedback" role="status" aria-live="polite"></p>
-                </form>
+                </div>
+                <div class="col-lg-6">
+                    <span class="text-uppercase text-primary fw-semibold small">Services</span>
+                    <h2 class="fw-bold mt-3">Une expérience e-commerce fluide et sécurisée</h2>
+                    <div class="mt-4">
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <div class="feature-icon flex-shrink-0">💳</div>
+                            <div>
+                                <h3 class="h6 mb-1">Paiement sécurisé</h3>
+                                <p class="text-secondary mb-0">Carte bancaire, PayPal et wallets numériques avec chiffrement AES-256.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <div class="feature-icon flex-shrink-0">🚚</div>
+                            <div>
+                                <h3 class="h6 mb-1">Livraison mondiale</h3>
+                                <p class="text-secondary mb-0">Suivi en temps réel, partenaires DHL Express & Chronopost, options green.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="feature-icon flex-shrink-0">💬</div>
+                            <div>
+                                <h3 class="h6 mb-1">Support humain</h3>
+                                <p class="text-secondary mb-0">Équipe dédiée multilingue, réponses sous 24h et assistance live chat.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="newsletter-card mx-auto">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-7">
+                        <span class="text-uppercase text-primary fw-semibold small">Newsletter</span>
+                        <h2 class="fw-bold mt-2">Recevez les drops avant tout le monde</h2>
+                        <p class="text-secondary mb-0">Inscrivez-vous pour accéder aux préventes, codes promo exclusifs et invitations à nos évènements.</p>
+                    </div>
+                    <div class="col-lg-5">
+                        <form class="row g-3" novalidate>
+                            <div class="col-12">
+                                <label class="form-label" for="newsletter-email">Votre email</label>
+                                <input class="form-control form-control-lg" type="email" id="newsletter-email" placeholder="vous@vision.com">
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary btn-lg w-100" type="submit">S'inscrire</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 <?php include __DIR__ . '/includes/layout/footer.php'; ?>
