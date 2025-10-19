@@ -10,7 +10,7 @@ if (!isset($pageSlug)) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="<?= htmlspecialchars($pageLang, ENT_QUOTES) ?>" data-theme="<?= htmlspecialchars($initialTheme, ENT_QUOTES) ?>">
+<html lang="<?= htmlspecialchars($pageLang, ENT_QUOTES) ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
