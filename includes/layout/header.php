@@ -8,15 +8,6 @@
 ?>
 <header class="site-header">
     <div class="container header-inner">
-        <a class="brand" href="<?= htmlspecialchars(base_url('index.php'), ENT_QUOTES) ?>" aria-label="<?= APP_NAME ?> — Accueil">
-            <img
-                src="<?= htmlspecialchars($logoSrc, ENT_QUOTES) ?>"
-                alt="<?= APP_NAME ?>"
-                class="brand-logo"
-                data-logo-dark="assets/images/vision-logo-light.svg"
-                data-logo-light="assets/images/vision-logo-dark.svg"
-            />
-        </a>
         <nav class="main-nav" aria-label="Navigation principale">
             <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
                 <span></span>
@@ -79,5 +70,14 @@
                 </ul>
             </div>
         </div>
-    </nav>
+        <a class="brand" href="<?= htmlspecialchars(base_url('index.php'), ENT_QUOTES) ?>" aria-label="<?= APP_NAME ?> — Accueil">
+            <img
+                src="<?= htmlspecialchars($logoSrc, ENT_QUOTES) ?>"
+                alt="<?= APP_NAME ?>"
+                class="brand-logo"
+                data-logo-dark="assets/images/vision-logo-light.svg"
+                data-logo-light="assets/images/vision-logo-dark.svg"
+            />
+        </a>
+    </div>
 </header>
