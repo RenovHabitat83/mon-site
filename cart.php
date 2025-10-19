@@ -3,66 +3,112 @@ require_once __DIR__ . '/includes/init.php';
 $pageSlug = 'cart';
 $pageTitle = 'Vision — Panier';
 $pageDescription = "Visualisez et validez vos pièces Vision avant le paiement sécurisé.";
+$cartItems = get_cart_items();
+$totals = calculate_cart_totals($cartItems);
 include __DIR__ . '/includes/layout/head.php';
 include __DIR__ . '/includes/layout/header.php';
 ?>
 <main>
-        <section class="page-hero">
-            <div class="container">
-                <p class="eyebrow" data-i18n="cart_tag">Panier</p>
-                <h1 data-i18n="cart_title">Vos sélections Vision</h1>
-                <p data-i18n="cart_intro">Ajustez les quantités, appliquez vos codes promo et choisissez votre mode de livraison.</p>
-            </div>
-        </section>
+    <section class="py-5 bg-white">
+        <div class="container py-4 text-center">
+            <span class="text-uppercase text-primary fw-semibold small">Panier</span>
+            <h1 class="fw-bold display-6 mt-3">Vos sélections Vision</h1>
+            <p class="text-secondary mx-auto" style="max-width: 680px;">Ajustez les quantités, appliquez vos codes promo et choisissez votre mode de livraison.</p>
+        </div>
+    </section>
 
-        <section class="cart-section">
-            <div class="container cart-grid">
-                <div class="cart-items" id="cart-items" aria-live="polite">
-                    <!-- Cart items generated via JS -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h2 class="h4 fw-bold mb-4">Articles</h2>
+                        <?php if (empty($cartItems)): ?>
+                            <p class="text-secondary mb-0">Votre panier est vide pour le moment.</p>
+                        <?php else: ?>
+                            <?php foreach ($cartItems as $item): ?>
+                                <div class="cart-item d-flex flex-column flex-md-row gap-3 align-items-start">
+                                    <div class="flex-grow-1">
+                                        <h3 class="h5 mb-1"><?= htmlspecialchars($item['name']['fr'] ?? $item['name'] ?? 'Produit Vision', ENT_QUOTES) ?></h3>
+                                        <p class="text-secondary mb-2"><?= htmlspecialchars($item['description']['fr'] ?? $item['description'] ?? 'Pièce signature Vision.', ENT_QUOTES) ?></p>
+                                        <div class="d-flex flex-wrap gap-3 text-secondary small">
+                                            <?php if (!empty($item['size'])): ?>
+                                                <span>Taille : <?= htmlspecialchars(is_array($item['size']) ? implode(', ', $item['size']) : $item['size'], ENT_QUOTES) ?></span>
+                                            <?php endif; ?>
+                                            <?php if (!empty($item['color'])): ?>
+                                                <span>Couleur : <?= htmlspecialchars($item['color'], ENT_QUOTES) ?></span>
+                                            <?php endif; ?>
+                                            <span>Quantité : <?= (int) ($item['quantity'] ?? 1) ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="fw-semibold d-block"><?= number_format((float) ($item['price'] ?? 0), 2, ',', ' ') ?> <?= htmlspecialchars($item['currency'] ?? 'EUR', ENT_QUOTES) ?></span>
+                                        <a class="link-secondary small" href="shop.php">Modifier</a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <aside class="cart-summary">
-                    <h2 data-i18n="cart_summary_title">Récapitulatif</h2>
-                    <div class="summary-line">
-                        <span data-i18n="cart_subtotal">Sous-total</span>
-                        <span id="cart-subtotal">0 €</span>
-                    </div>
-                    <div class="summary-line">
-                        <span data-i18n="cart_shipping">Livraison estimée</span>
-                        <span id="cart-shipping">0 €</span>
-                    </div>
-                    <div class="summary-line total">
-                        <span data-i18n="cart_total">Total</span>
-                        <span id="cart-total">0 €</span>
-                    </div>
-                    <form class="promo-form" id="promo-form" novalidate>
-                        <label for="promo-code" data-i18n="cart_promo">Code promo</label>
-                        <div class="promo-input">
-                            <input type="text" id="promo-code" name="promo" placeholder="VISION15">
-                            <button type="submit" class="btn ghost" data-i18n="cart_apply">Appliquer</button>
+                <div class="col-lg-4">
+                    <div class="order-summary p-4">
+                        <h2 class="h5 fw-bold mb-4">Récapitulatif</h2>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Sous-total</span>
+                            <span><?= number_format($totals['subtotal'], 2, ',', ' ') ?> <?= htmlspecialchars($totals['currency'], ENT_QUOTES) ?></span>
                         </div>
-                        <p class="form-feedback" role="status" aria-live="polite"></p>
-                    </form>
-                    <button class="btn" data-i18n="cart_checkout">Passer au paiement sécurisé</button>
-                    <p class="secure-note" data-i18n="cart_secure_note">Transactions sécurisées (CB, PayPal, Apple Pay). Garantie satisfait ou remboursé 30 jours.</p>
-                </aside>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Livraison estimée</span>
+                            <span><?= number_format($totals['shipping'], 2, ',', ' ') ?> <?= htmlspecialchars($totals['currency'], ENT_QUOTES) ?></span>
+                        </div>
+                        <div class="d-flex justify-content-between border-top pt-3 mt-3 fw-semibold">
+                            <span>Total</span>
+                            <span><?= number_format($totals['total'], 2, ',', ' ') ?> <?= htmlspecialchars($totals['currency'], ENT_QUOTES) ?></span>
+                        </div>
+                        <div class="mt-4">
+                            <label class="form-label" for="promo-code">Code promo</label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" id="promo-code" placeholder="VISION15" disabled>
+                                <span class="input-group-text">À venir</span>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary btn-lg w-100 mt-4" href="account.php">Passer au paiement sécurisé</a>
+                        <p class="text-secondary small mt-3 mb-0">Transactions sécurisées (CB, PayPal, Apple Pay). Garantie satisfait ou remboursé 30 jours.</p>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="services-grid additional-info">
-            <div class="container grid-3">
-                <article>
-                    <h3 data-i18n="cart_delivery_title">Livraison agile</h3>
-                    <p data-i18n="cart_delivery_copy">Choisissez entre express, standard ou point relais. Suivi en temps réel sur votre espace Vision.</p>
-                </article>
-                <article>
-                    <h3 data-i18n="cart_returns_title">Retours simplifiés</h3>
-                    <p data-i18n="cart_returns_copy">Préparez votre retour en ligne, choisissez la collecte à domicile ou déposez dans un point relais.</p>
-                </article>
-                <article>
-                    <h3 data-i18n="cart_support_title">Support 24/7</h3>
-                    <p data-i18n="cart_support_copy">Live chat, WhatsApp, email. Réponse sous 15 minutes pour les commandes en cours.</p>
-                </article>
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm card-lift">
+                        <div class="card-body">
+                            <h3 class="h5">Livraison agile</h3>
+                            <p class="text-secondary mb-0">Choisissez entre express, standard ou point relais. Suivi en temps réel sur votre espace Vision.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm card-lift">
+                        <div class="card-body">
+                            <h3 class="h5">Retours simplifiés</h3>
+                            <p class="text-secondary mb-0">Préparez votre retour en ligne, choisissez la collecte à domicile ou déposez dans un point relais.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm card-lift">
+                        <div class="card-body">
+                            <h3 class="h5">Support 24/7</h3>
+                            <p class="text-secondary mb-0">Live chat, WhatsApp, email. Réponse sous 15 minutes pour les commandes en cours.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 <?php include __DIR__ . '/includes/layout/footer.php'; ?>

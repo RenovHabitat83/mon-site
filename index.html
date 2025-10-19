@@ -1,358 +1,325 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision — Streetwear & Casual</title>
-    <script>
-        (function () {
-            const storageKey = 'vision-theme';
-            let theme = document.documentElement.getAttribute('data-theme') || 'dark';
-            try {
-                const stored = localStorage.getItem(storageKey);
-                if (stored) {
-                    theme = stored;
-                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-                    theme = 'light';
-                }
-            } catch (error) {
-                theme = 'dark';
-            }
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
-    </script>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Renov Habitat 83 — Votre maison, notre passion depuis 2010</title>
+    <meta name="description" content="Construction, rénovation et aménagement dans le Var : Renov Habitat 83 conçoit des espaces sur mesure pour les particuliers et les professionnels.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-2v9WuFyuFUnwDPY2sV7mBy06SnVAk0nnBYnCTsRmR271GGBqBPdZiZsa1+lPHX7n" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.0.0">
 </head>
-<body data-page="home">
-    <header class="site-header">
-        <div class="container header-inner">
-            <a class="brand" href="index.html" aria-label="Vision — Accueil">
-                <img
-                    src="assets/images/vision-logo-light.svg"
-                    alt="Vision"
-                    class="brand-logo"
-                    data-logo-dark="assets/images/vision-logo-light.svg"
-                    data-logo-light="assets/images/vision-logo-dark.svg"
-                />
+<body class="site-body d-flex flex-column min-vh-100" data-page="home">
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="index.html">
+                <img src="assets/images/logo-renov.svg" alt="Renov Habitat 83" class="brand-mark" height="48">
+                <div class="brand-copy">
+                    <span class="fw-semibold text-uppercase text-success-emphasis small">Renov Habitat 83</span>
+                    <span class="d-block fw-semibold text-dark-emphasis">Rénovation &amp; Construction</span>
+                </div>
             </a>
-            <nav class="main-nav" aria-label="Navigation principale">
-                <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul id="primary-menu" class="nav-list">
-                    <li><a data-i18n="nav_home" href="index.html">Accueil</a></li>
-                    <li><a data-i18n="nav_shop" href="shop.html">Boutique</a></li>
-                    <li><a data-i18n="nav_about" href="about.html">À propos</a></li>
-                    <li><a data-i18n="nav_contact" href="contact.html">Contact</a></li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNavbar" aria-controls="primaryNavbar" aria-expanded="false" aria-label="Menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="primaryNavbar">
+                <ul class="navbar-nav ms-auto me-lg-4 align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" data-page-link="home" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page-link="shop" href="shop.html">Boutique</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page-link="about" href="about.html">À propos</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page-link="contact" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" data-page-link="admin" href="admin/index.php">Administration</a></li>
                 </ul>
-            </nav>
-            <div class="header-actions">
-                <button class="theme-toggle" type="button" aria-pressed="false">
-                    <span class="sr-only theme-label">Mode clair</span>
-                    <span class="toggle-track" aria-hidden="true">
-                        <span class="toggle-icon toggle-icon--moon">☾</span>
-                        <span class="toggle-icon toggle-icon--sun">☀</span>
-                        <span class="toggle-thumb"></span>
-                    </span>
-                </button>
-                <button class="lang-toggle" type="button" data-lang="fr" aria-label="Passer en anglais">
-                    <span class="flag" aria-hidden="true">🇬🇧</span>
-                    <span class="sr-only lang-toggle-label">Passer en anglais</span>
-                </button>
-                <a class="btn" href="cart.html" data-i18n="cta_cart">Panier</a>
-                <a class="account-link" href="account.html">
-                    <span class="sr-only" data-i18n="account_link_label">Mon compte</span>
-                    <span class="account-icon" aria-hidden="true"></span>
+                <div class="d-flex align-items-center gap-2">
+                    <a class="btn btn-success rounded-pill px-4" href="#contact">Demander un devis</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="homepage">
+    <section class="hero-section position-relative text-light">
+        <div class="hero-background"></div>
+        <div class="container position-relative">
+            <div class="row justify-content-start">
+                <div class="col-lg-7 col-xl-6">
+                    <div class="hero-card shadow-lg">
+                        <span class="hero-badge">Entreprise Renov Habitat 83</span>
+                        <h1 class="display-5 fw-bold mb-3">Votre maison, notre passion depuis 2010</h1>
+                        <p class="lead text-secondary-emphasis mb-4">Nous rénovons, agrandissons et sublimons vos espaces de vie dans tout le Var. Une équipe d'artisans experts à votre écoute, du premier croquis à la réception de chantier.</p>
+                        <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
+                            <a class="btn btn-success btn-lg rounded-pill px-4" href="#contact">Demander un devis gratuit</a>
+                            <a class="btn btn-outline-success btn-lg rounded-pill px-4" href="#realisations">Découvrir nos réalisations</a>
+                        </div>
+                        <ul class="hero-list list-unstyled d-flex flex-column gap-2 mb-4">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Accompagnement personnalisé et interlocuteur unique</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Respect des délais, suivi de chantier transparent</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Garanties décennales et assurances professionnelles</li>
+                        </ul>
+                        <div class="hero-highlight d-flex align-items-center gap-3">
+                            <div class="highlight-icon">
+                                <i class="bi bi-house-heart-fill"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-semibold text-dark">+350 projets réalisés</p>
+                                <p class="mb-0 text-secondary">Rénovations complètes, extensions contemporaines et extérieurs paysagers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 why-section">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5">
+                    <div class="why-icon">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h2 class="fw-bold mb-3">Pourquoi choisir Renov Habitat 83 ?</h2>
+                    <p class="text-secondary mb-4">Parce que chaque projet est unique, nous imaginons des solutions sur mesure en tenant compte de vos envies, de votre budget et de votre planning. Notre équipe coordonne l'ensemble des corps de métier pour un résultat irréprochable.</p>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li><i class="bi bi-check-lg text-success me-2"></i>Artisans qualifiés, certifiés Qualibat &amp; RGE</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i>Matériaux durables et circuits d'approvisionnement locaux</li>
+                        <li><i class="bi bi-check-lg text-success me-2"></i>Suivi client dédié et visites régulières de chantier</li>
+                    </ul>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="feature-card h-100">
+                                <div class="feature-icon bg-success-subtle text-success"><i class="bi bi-bricks"></i></div>
+                                <h3 class="h5 fw-semibold">Rénovations complètes</h3>
+                                <p class="text-secondary mb-0">Appartements, villas et locaux professionnels : nous transformons vos espaces pour conjuguer confort, design et performance énergétique.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card h-100">
+                                <div class="feature-icon bg-success-subtle text-success"><i class="bi bi-columns-gap"></i></div>
+                                <h3 class="h5 fw-semibold">Extensions &amp; Surélévations</h3>
+                                <p class="text-secondary mb-0">Gagnez des mètres carrés lumineux et fonctionnels avec des structures intégrées à l'architecture existante.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card h-100">
+                                <div class="feature-icon bg-success-subtle text-success"><i class="bi bi-flower3"></i></div>
+                                <h3 class="h5 fw-semibold">Aménagements extérieurs</h3>
+                                <p class="text-secondary mb-0">Terrasses, piscines et jardins paysagers : créez un cocon extérieur propice au partage et à la détente.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card h-100">
+                                <div class="feature-icon bg-success-subtle text-success"><i class="bi bi-lightning-charge"></i></div>
+                                <h3 class="h5 fw-semibold">Interventions rapides</h3>
+                                <p class="text-secondary mb-0">Maintenance, mise en sécurité, dépannages : une équipe réactive pour vos urgences techniques.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light" id="realisations">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <span class="subtitle">Nos dernières réalisations</span>
+                <h2 class="fw-bold">Des projets sur mesure qui valorisent votre patrimoine</h2>
+                <p class="text-secondary">Découvrez quelques-unes de nos interventions récentes dans le Var : rénovation intérieure, cuisine sur mesure, extension de maison et aménagement extérieur paysager.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <article class="realisation-card h-100">
+                        <div class="ratio ratio-4x3 rounded-4 overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80" alt="Rénovation de villa contemporaine" class="img-fluid object-fit-cover">
+                        </div>
+                        <h3 class="h5 fw-semibold mb-1">Villa contemporaine · Bandol</h3>
+                        <p class="text-secondary mb-0">Rénovation globale avec ouverture sur la mer et création d'une suite parentale.</p>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <article class="realisation-card h-100">
+                        <div class="ratio ratio-4x3 rounded-4 overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Cuisine sur mesure" class="img-fluid object-fit-cover">
+                        </div>
+                        <h3 class="h5 fw-semibold mb-1">Cuisine design · Toulon</h3>
+                        <p class="text-secondary mb-0">Mobilier sur mesure, plan de travail en quartz et éclairage intégré.</p>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <article class="realisation-card h-100">
+                        <div class="ratio ratio-4x3 rounded-4 overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=900&q=80" alt="Extension de maison" class="img-fluid object-fit-cover">
+                        </div>
+                        <h3 class="h5 fw-semibold mb-1">Extension bois · Hyères</h3>
+                        <p class="text-secondary mb-0">Extension ossature bois avec grande baie vitrée et terrasse pergola.</p>
+                    </article>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <article class="realisation-card h-100">
+                        <div class="ratio ratio-4x3 rounded-4 overflow-hidden mb-3">
+                            <img src="https://images.unsplash.com/photo-1600585154340-0ef3c08dcdb6?auto=format&fit=crop&w=900&q=80" alt="Aménagement extérieur" class="img-fluid object-fit-cover">
+                        </div>
+                        <h3 class="h5 fw-semibold mb-1">Jardin méditerranéen · Sanary</h3>
+                        <p class="text-secondary mb-0">Création d'une piscine miroir, terrasses en bois et jardin sec végétalisé.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 testimonials-section">
+        <div class="container">
+            <div class="section-heading text-center mb-5">
+                <span class="subtitle">Ils parlent de nous !</span>
+                <h2 class="fw-bold">La satisfaction de nos clients est notre meilleure vitrine</h2>
+                <p class="text-secondary">Professionnels et particuliers nous recommandent pour notre écoute, la qualité de notre travail et le respect des engagements.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <article class="testimonial-card h-100">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="avatar">AB</div>
+                                <div>
+                                    <h3 class="h6 mb-1">Amandine B. · Toulon</h3>
+                                    <p class="mb-0 text-secondary">Rénovation complète d'appartement</p>
+                                </div>
+                            </div>
+                            <div class="stars text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Equipe très professionnelle, respect des délais et un rendu final au-delà de nos attentes. Nous recommandons Renov Habitat 83 les yeux fermés !"</p>
+                    </article>
+                </div>
+                <div class="col-lg-6">
+                    <article class="testimonial-card h-100">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="avatar">JM</div>
+                                <div>
+                                    <h3 class="h6 mb-1">Jean-Marc L. · La Seyne</h3>
+                                    <p class="mb-0 text-secondary">Extension et terrasse</p>
+                                </div>
+                            </div>
+                            <div class="stars text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Un suivi de chantier irréprochable et des finitions parfaites. Les équipes sont à l'écoute et force de proposition pour optimiser chaque détail."</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 contact-section" id="contact">
+        <div class="container">
+            <div class="contact-panel p-4 p-lg-5 rounded-4 shadow-lg">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-7">
+                        <span class="contact-badge">Parlez-nous de votre projet</span>
+                        <h2 class="fw-bold mb-3">Nous imaginons et réalisons votre habitat idéal</h2>
+                        <p class="text-secondary mb-4">Un conseiller dédié vous accompagne à chaque étape : étude personnalisée, plans 3D, sélection des matériaux et coordination complète du chantier.</p>
+                        <ul class="list-unstyled d-flex flex-column gap-2 mb-4">
+                            <li><i class="bi bi-telephone-outbound-fill text-success me-2"></i>Devis détaillé sous 48 heures</li>
+                            <li><i class="bi bi-calendar-check-fill text-success me-2"></i>Prise de rendez-vous sur mesure à domicile ou en visio</li>
+                            <li><i class="bi bi-shield-check text-success me-2"></i>Garanties décennales et responsabilité civile professionnelle</li>
+                        </ul>
+                        <a class="btn btn-success btn-lg rounded-pill px-4" href="mailto:contact@renovhabitat83.fr">Envoyer ma demande</a>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="contact-box rounded-4 p-4">
+                            <h3 class="h5 fw-semibold mb-3">Contactez-nous</h3>
+                            <div class="d-flex flex-column gap-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="contact-icon bg-success-subtle text-success"><i class="bi bi-telephone-fill"></i></div>
+                                    <div>
+                                        <p class="mb-0 fw-semibold">Appelez-nous</p>
+                                        <a class="text-decoration-none text-dark" href="tel:+33494000000">04 94 00 00 00</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="contact-icon bg-success-subtle text-success"><i class="bi bi-envelope-fill"></i></div>
+                                    <div>
+                                        <p class="mb-0 fw-semibold">Écrivez-nous</p>
+                                        <a class="text-decoration-none text-dark" href="mailto:contact@renovhabitat83.fr">contact@renovhabitat83.fr</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="contact-icon bg-success-subtle text-success"><i class="bi bi-geo-alt-fill"></i></div>
+                                    <div>
+                                        <p class="mb-0 fw-semibold">Venez nous rencontrer</p>
+                                        <p class="mb-0 text-secondary">123 avenue des Arts &amp; Métiers · 83000 Toulon</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="site-footer mt-auto pt-5 pb-4 text-light">
+    <div class="container">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-4">
+                <a class="footer-brand d-inline-flex align-items-center gap-3 text-decoration-none text-light mb-3" href="index.html">
+                    <img src="assets/images/logo-renov.svg" alt="Renov Habitat 83" height="44">
+                    <div>
+                        <span class="fw-semibold text-uppercase small">Renov Habitat 83</span>
+                        <span class="d-block">Artisans du Var depuis 2010</span>
+                    </div>
                 </a>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero" id="hero">
-            <div class="container hero-content">
-                <div>
-                    <p class="eyebrow" data-i18n="hero_tag">Nouvelle vague streetwear</p>
-                    <h1 data-i18n="hero_title">Vision — L'élégance urbaine taillée pour le quotidien</h1>
-                    <p class="lead" data-i18n="hero_copy">Des silhouettes minimalistes, des matières responsables et une allure qui capte l'instant. Découvrez des pièces pensées pour bouger avec vous.</p>
-                    <div class="hero-actions">
-                        <a class="btn" href="shop.html" data-i18n="hero_cta_primary">Explorer la collection</a>
-                        <a class="btn ghost" href="#limited" data-i18n="hero_cta_secondary">Voir les éditions limitées</a>
-                    </div>
-                </div>
-                <div class="hero-visual" role="presentation">
-                    <div class="hero-card">
-                        <span class="badge" data-i18n="badge_new">Nouveautés</span>
-                        <h2 data-i18n="hero_card_title">Drop Vision 07</h2>
-                        <p data-i18n="hero_card_copy">Parka technique, hoodie double épaisseur, pantalon cargo texturé.</p>
-                        <a class="text-link" href="shop.html" data-i18n="hero_card_link">Découvrir la capsule</a>
-                    </div>
+                <p class="text-white-50 mb-4">Rénovation intérieure, extension, aménagement extérieur : notre équipe donne vie à vos projets avec exigence et passion.</p>
+                <div class="d-flex gap-3">
+                    <a class="footer-social" href="https://www.facebook.com" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a class="footer-social" href="https://www.instagram.com" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a class="footer-social" href="https://www.linkedin.com" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
-        </section>
-
-        <section class="highlight-products" id="selection">
-            <div class="container">
-                <div class="section-header light">
-                    <span class="eyebrow" data-i18n="highlight_tag">Sélection lumineuse</span>
-                    <h2 data-i18n="highlight_title">Une zone claire pour repérer vos prochains essentiels</h2>
-                    <p data-i18n="highlight_copy">Visualisez dès maintenant trois emplacements produits dédiés à vos futurs best-sellers Vision.</p>
-                </div>
-                <div class="highlight-grid" role="list">
-                    <article class="highlight-card" role="listitem">
-                        <div class="highlight-media" aria-hidden="true">
-                            <span class="slot-id">01</span>
-                            <span class="media-note" data-i18n="highlight_visual">Visuel 4:5</span>
-                        </div>
-                        <div class="highlight-body">
-                            <span class="highlight-label" data-i18n="highlight_product1_label">Produit à venir</span>
-                            <h3 data-i18n="highlight_product1_name">Emplacement produit n°1</h3>
-                            <p data-i18n="highlight_product1_copy">Réservez cet espace pour votre pièce phare : photo, nom, prix et appel à l'action s'y intégreront parfaitement.</p>
-                            <p class="highlight-price" data-i18n="highlight_price_placeholder">Prix à définir</p>
-                            <button class="btn ghost" type="button" disabled data-i18n="highlight_cta">Bientôt disponible</button>
-                        </div>
-                    </article>
-                    <article class="highlight-card" role="listitem">
-                        <div class="highlight-media" aria-hidden="true">
-                            <span class="slot-id">02</span>
-                            <span class="media-note" data-i18n="highlight_visual">Visuel 4:5</span>
-                        </div>
-                        <div class="highlight-body">
-                            <span class="highlight-label" data-i18n="highlight_product2_label">Produit à venir</span>
-                            <h3 data-i18n="highlight_product2_name">Emplacement produit n°2</h3>
-                            <p data-i18n="highlight_product2_copy">Mettez en avant une nouveauté ou une édition limitée avec visuel 3:4 et fiche descriptive concise.</p>
-                            <p class="highlight-price" data-i18n="highlight_price_placeholder">Prix à définir</p>
-                            <button class="btn ghost" type="button" disabled data-i18n="highlight_cta">Bientôt disponible</button>
-                        </div>
-                    </article>
-                    <article class="highlight-card" role="listitem">
-                        <div class="highlight-media" aria-hidden="true">
-                            <span class="slot-id">03</span>
-                            <span class="media-note" data-i18n="highlight_visual">Visuel 4:5</span>
-                        </div>
-                        <div class="highlight-body">
-                            <span class="highlight-label" data-i18n="highlight_product3_label">Produit à venir</span>
-                            <h3 data-i18n="highlight_product3_name">Emplacement produit n°3</h3>
-                            <p data-i18n="highlight_product3_copy">Préparez ici votre drop exclusif : matériaux, storytelling et boutons d'ajout au panier seront mis en valeur.</p>
-                            <p class="highlight-price" data-i18n="highlight_price_placeholder">Prix à définir</p>
-                            <button class="btn ghost" type="button" disabled data-i18n="highlight_cta">Bientôt disponible</button>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="grid-section" id="collections">
-            <div class="container section-header">
-                <span class="eyebrow" data-i18n="collections_tag">Collections</span>
-                <h2 data-i18n="collections_title">Des pièces essentielles pour un dressing visionnaire</h2>
-                <p data-i18n="collections_copy">Composez votre uniforme urbain avec des basiques revisités, des coupes oversize maîtrisées et des détails techniques pensés pour durer.</p>
-            </div>
-            <div class="container collection-grid">
-                <article class="collection-card">
-                    <h3 data-i18n="collection_metro_title">Ligne Métropolis</h3>
-                    <p data-i18n="collection_metro_copy">Blousons modulaires, pantalons cargos ajustables et accessoires réfléchissants inspirés de la ville nocturne.</p>
-                    <a class="text-link" href="shop.html#metropolis" data-i18n="collection_metro_link">Shopper la ligne</a>
-                </article>
-                <article class="collection-card">
-                    <h3 data-i18n="collection_essentials_title">Essentials 24/7</h3>
-                    <p data-i18n="collection_essentials_copy">Hoodies premium, tees respirants et joggers sculptés pour l'agilité. Le confort sans compromis.</p>
-                    <a class="text-link" href="shop.html#essentials" data-i18n="collection_essentials_link">Shopper les essentiels</a>
-                </article>
-                <article class="collection-card">
-                    <h3 data-i18n="collection_fluid_title">Fluid Dynamics</h3>
-                    <p data-i18n="collection_fluid_copy">Pièces unisexes, tissus techniques semi-transparents et superpositions légères inspirées du mouvement.</p>
-                    <a class="text-link" href="shop.html#fluid" data-i18n="collection_fluid_link">Shopper la capsule</a>
-                </article>
-            </div>
-        </section>
-
-        <section class="split-section" id="values">
-            <div class="container split">
-                <div>
-                    <span class="eyebrow" data-i18n="values_tag">Manifeste</span>
-                    <h2 data-i18n="values_title">Un vestiaire engagé pour une communauté en mouvement</h2>
-                    <ul class="value-list">
-                        <li data-i18n="values_1">Production responsable en ateliers certifiés en Europe et au Japon.</li>
-                        <li data-i18n="values_2">Matériaux recyclés, coton bio, cuir vegan et emballages compostables.</li>
-                        <li data-i18n="values_3">Création inclusive : coupes pensées pour toutes les morphologies.</li>
-                    </ul>
-                    <a class="btn ghost" href="about.html" data-i18n="values_cta">Lire notre histoire</a>
-                </div>
-                <div class="metrics">
-                    <div class="metric">
-                        <span class="metric-value">92%</span>
-                        <span class="metric-label" data-i18n="metric_satisfaction">de clients satisfaits</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-value">48h</span>
-                        <span class="metric-label" data-i18n="metric_shipping">Expédition moyenne</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-value">35</span>
-                        <span class="metric-label" data-i18n="metric_cities">Pays livrés</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="feature-section" id="limited">
-            <div class="container section-header">
-                <span class="eyebrow" data-i18n="limited_tag">Éditions limitées</span>
-                <h2 data-i18n="limited_title">Drops exclusifs & collaborations visionnaires</h2>
-                <p data-i18n="limited_copy">Alertes en temps réel, quantités restreintes, design signature. Ne manquez aucun drop.</p>
-            </div>
-            <div class="container limited-grid">
-                <article class="limited-card">
-                    <span class="badge" data-i18n="badge_collab">Collaboration</span>
-                    <h3 data-i18n="limited_card1_title">Vision x Concrete Waves</h3>
-                    <p data-i18n="limited_card1_copy">Capsule inspirée des textures urbaines et des graffitis lumineux.</p>
-                    <a class="text-link" href="shop.html#limited" data-i18n="limited_card1_link">Accéder au drop</a>
-                </article>
-                <article class="limited-card">
-                    <span class="badge" data-i18n="badge_limited">Série limitée</span>
-                    <h3 data-i18n="limited_card2_title">Programme Atelier 06</h3>
-                    <p data-i18n="limited_card2_copy">Pièces numérotées, broderies à la main, packaging signature Vision.</p>
-                    <a class="text-link" href="shop.html#atelier" data-i18n="limited_card2_link">Réserver</a>
-                </article>
-                <article class="limited-card">
-                    <span class="badge" data-i18n="badge_restocks">Restock</span>
-                    <h3 data-i18n="limited_card3_title">Archive Restock</h3>
-                    <p data-i18n="limited_card3_copy">Les pièces iconiques reviennent en quantités très limitées.</p>
-                    <a class="text-link" href="shop.html#archive" data-i18n="limited_card3_link">Être notifié·e</a>
-                </article>
-            </div>
-        </section>
-
-        <section class="immersive-section" id="immersive">
-            <div class="container split">
-                <div>
-                    <span class="eyebrow" data-i18n="immersive_tag">Vue 360°</span>
-                    <h2 data-i18n="immersive_title">Interagissez avec nos pièces en 3D</h2>
-                    <p data-i18n="immersive_copy">Manipulez chaque vêtement, inspectez les textures et choisissez la combinaison qui vous ressemble. La technologie Vision 360° rend l'expérience d'achat tactile.</p>
-                    <ul class="value-list">
-                        <li data-i18n="immersive_point1">Visualisation multi-angle et zoom haute définition.</li>
-                        <li data-i18n="immersive_point2">Prévisualisation des variations de couleurs en temps réel.</li>
-                        <li data-i18n="immersive_point3">Compatibilité mobile, tablette et desktop.</li>
-                    </ul>
-                </div>
-                <div class="viewer">
-                    <model-viewer src="assets/models/sample-model.glb" alt="Veste Vision 3D" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="assets/images/placeholder-3d.jpg" shadow-intensity="1"></model-viewer>
-                    <p class="viewer-note" data-i18n="immersive_note">Aperçu prototype — la modélisation finale sera intégrée lors de la réception des fichiers 3D.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="feature-section" id="services">
-            <div class="container section-header">
-                <span class="eyebrow" data-i18n="services_tag">Services</span>
-                <h2 data-i18n="services_title">Une expérience e-commerce fluide et sécurisée</h2>
-            </div>
-            <div class="container services-grid">
-                <article class="service-card">
-                    <h3 data-i18n="service_payment_title">Paiement sécurisé</h3>
-                    <p data-i18n="service_payment_copy">Carte bancaire, PayPal et wallets numériques avec chiffrement AES-256.</p>
-                </article>
-                <article class="service-card">
-                    <h3 data-i18n="service_delivery_title">Livraison mondiale</h3>
-                    <p data-i18n="service_delivery_copy">Suivi en temps réel, partenaires DHL Express & Chronopost, options green.</p>
-                </article>
-                <article class="service-card">
-                    <h3 data-i18n="service_returns_title">Retours simplifiés</h3>
-                    <p data-i18n="service_returns_copy">Portail de retours intégré, étiquettes prépayées, remboursement rapide.</p>
-                </article>
-                <article class="service-card">
-                    <h3 data-i18n="service_support_title">Support humain</h3>
-                    <p data-i18n="service_support_copy">Équipe dédiée multilingue, réponses sous 24h et assistance live chat.</p>
-                </article>
-            </div>
-        </section>
-
-        <section class="newsletter" id="newsletter">
-            <div class="container newsletter-inner">
-                <div>
-                    <span class="eyebrow" data-i18n="newsletter_tag">Newsletter</span>
-                    <h2 data-i18n="newsletter_title">Recevez les drops avant tout le monde</h2>
-                    <p data-i18n="newsletter_copy">Inscrivez-vous pour accéder aux préventes, codes promo exclusifs et invitations à nos évènements.</p>
-                </div>
-                <form class="newsletter-form" novalidate>
-                    <label for="newsletter-email" data-i18n="newsletter_label">Votre email</label>
-                    <div class="newsletter-input">
-                        <input type="email" id="newsletter-email" name="email" placeholder="name@email.com" required>
-                        <button type="submit" class="btn" data-i18n="newsletter_cta">S'inscrire</button>
-                    </div>
-                    <p class="form-feedback" role="status" aria-live="polite"></p>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div>
-                <img
-                    src="assets/images/vision-logo-light.svg"
-                    alt="Vision"
-                    class="brand-logo"
-                    data-logo-dark="assets/images/vision-logo-light.svg"
-                    data-logo-light="assets/images/vision-logo-dark.svg"
-                />
-                <p data-i18n="footer_copy">Vision réinvente les essentiels urbains avec un regard responsable et avant-gardiste.</p>
-                <div class="social-links" aria-label="Réseaux sociaux">
-                    <a href="https://instagram.com" aria-label="Instagram">Instagram</a>
-                    <a href="https://tiktok.com" aria-label="TikTok">TikTok</a>
-                    <a href="https://youtube.com" aria-label="YouTube">YouTube</a>
-                </div>
-            </div>
-            <div>
-                <h3 data-i18n="footer_shop">Boutique</h3>
-                <ul>
-                    <li><a href="shop.html#metropolis" data-i18n="footer_metro">Ligne Métropolis</a></li>
-                    <li><a href="shop.html#essentials" data-i18n="footer_essentials">Essentials 24/7</a></li>
-                    <li><a href="shop.html#fluid" data-i18n="footer_fluid">Fluid Dynamics</a></li>
-                    <li><a href="shop.html#limited" data-i18n="footer_limited">Drops exclusifs</a></li>
+            <div class="col-sm-6 col-lg-4">
+                <h3 class="h6 text-uppercase text-white-50 mb-3">Coordonnées</h3>
+                <ul class="list-unstyled text-white-50 mb-0">
+                    <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-success"></i><a class="footer-link" href="tel:+33494000000">04 94 00 00 00</a></li>
+                    <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-success"></i><a class="footer-link" href="mailto:contact@renovhabitat83.fr">contact@renovhabitat83.fr</a></li>
+                    <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-success"></i>123 avenue des Arts &amp; Métiers, 83000 Toulon</li>
+                    <li><i class="bi bi-clock-fill me-2 text-success"></i>Du lundi au samedi · 8h00 – 19h00</li>
                 </ul>
             </div>
-            <div>
-                <h3 data-i18n="footer_support">Support</h3>
-                <ul>
-                    <li><a href="contact.html" data-i18n="footer_contact">Nous contacter</a></li>
-                    <li><a href="policies.html#returns" data-i18n="footer_returns">Politique de retour</a></li>
-                    <li><a href="policies.html#delivery" data-i18n="footer_delivery">Livraison & suivi</a></li>
-                    <li><a href="policies.html#privacy" data-i18n="footer_privacy">Confidentialité & cookies</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 data-i18n="footer_legal">Légal</h3>
-                <ul>
-                    <li><a href="legal.html#terms" data-i18n="footer_terms">Mentions légales</a></li>
-                    <li><a href="legal.html#cgv" data-i18n="footer_cgv">Conditions générales de vente</a></li>
-                    <li><a href="policies.html#cookies" data-i18n="footer_cookies">Préférences cookies</a></li>
+            <div class="col-sm-6 col-lg-4">
+                <h3 class="h6 text-uppercase text-white-50 mb-3">Liens utiles</h3>
+                <ul class="list-unstyled text-white-50">
+                    <li class="mb-2"><a class="footer-link" href="about.html">Qui sommes-nous ?</a></li>
+                    <li class="mb-2"><a class="footer-link" href="policies.html">Politique de confidentialité</a></li>
+                    <li class="mb-2"><a class="footer-link" href="legal.html">Mentions légales</a></li>
+                    <li><a class="footer-link" href="admin/index.php">Espace administration</a></li>
                 </ul>
             </div>
         </div>
-        <div class="container footer-bottom">
-            <p data-i18n="footer_rights">© Vision. Tous droits réservés.</p>
-            <p class="goat-cheese" data-i18n="footer_budget">Budget : des toasts de chèvre ?</p>
-        </div>
-    </footer>
-
-    <div class="cookies-banner" role="dialog" aria-live="assertive" aria-label="Gestion des cookies">
-        <div class="cookies-content">
-            <p data-i18n="cookies_message">Vision utilise des cookies pour personnaliser votre expérience. Choisissez vos préférences.</p>
-            <div class="cookies-actions">
-                <button class="btn ghost" data-action="cookies-settings" data-i18n="cookies_settings">Paramétrer</button>
-                <button class="btn" data-action="cookies-accept" data-i18n="cookies_accept">Tout accepter</button>
-            </div>
+        <div class="footer-bottom mt-5 pt-3 border-top border-white-10 d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
+            <p class="mb-0 small text-white-50">© <span data-current-year></span> Renov Habitat 83. Tous droits réservés.</p>
+            <p class="mb-0 small text-white-50">Entreprise certifiée Qualibat &amp; RGE.</p>
         </div>
     </div>
-
-    <script type="module" src="assets/js/main.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="assets/js/main.js?v=1.0.0" defer></script>
 </body>
 </html>
