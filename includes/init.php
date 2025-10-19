@@ -10,4 +10,3 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $pageLang = determine_user_locale();
-$initialTheme = determine_user_theme();

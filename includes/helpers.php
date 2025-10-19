@@ -8,22 +8,6 @@ function asset(string $path): string
     return sprintf('%s%sv=%s', $path, $separator, rawurlencode($version));
 }
 
-function determine_user_theme(): string
-{
-    $theme = $_COOKIE[APP_THEME_COOKIE] ?? 'dark';
-    return $theme === 'light' ? 'light' : 'dark';
-}
-
-function persist_user_theme(string $theme): void
-{
-    setcookie(APP_THEME_COOKIE, $theme === 'light' ? 'light' : 'dark', [
-        'expires' => time() + 31536000,
-        'path' => '/',
-        'httponly' => false,
-        'samesite' => 'Lax',
-    ]);
-}
-
 function determine_user_locale(): string
 {
     $locale = APP_LOCALE_DEFAULT;
