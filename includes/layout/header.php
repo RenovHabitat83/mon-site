@@ -1,3 +1,11 @@
+<?php
+    $isLight = $initialTheme === 'light';
+    $currentLang = $pageLang === 'en' ? 'en' : 'fr';
+    $targetLang = $currentLang === 'fr' ? 'en' : 'fr';
+    $flag = $targetLang === 'en' ? '🇬🇧' : '🇫🇷';
+    $langLabel = $targetLang === 'en' ? 'Passer en anglais' : 'Passer en français';
+    $logoSrc = $isLight ? 'assets/images/vision-logo-dark.svg' : 'assets/images/vision-logo-light.svg';
+?>
 <header class="site-header">
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
         <div class="container">
